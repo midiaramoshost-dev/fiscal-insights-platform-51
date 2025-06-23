@@ -1,10 +1,11 @@
 
-import { Users, FileText, Settings, BarChart3, Calendar, Book, ShoppingCart, MessageSquare } from "lucide-react";
+import { Users, FileText, Settings, BarChart3, Calendar, Book, ShoppingCart, MessageSquare, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Link } from "react-router-dom";
 
 const AdminPanel = () => {
   const stats = [
@@ -32,9 +33,25 @@ const AdminPanel = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50 p-6">
       <div className="container mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-800">Painel Administrativo</h1>
-          <p className="text-slate-600 mt-1">Gerencie sua plataforma fiscal</p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <div className="flex items-center space-x-4 mb-2">
+              <Link to="/">
+                <Button variant="outline" size="sm" className="flex items-center space-x-2">
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Voltar ao Site</span>
+                </Button>
+              </Link>
+              <div className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-emerald-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-bold text-sm">CF</span>
+                </div>
+                <span className="text-lg font-semibold text-slate-800">Conecta Fisco</span>
+              </div>
+            </div>
+            <h1 className="text-3xl font-bold text-slate-800">Painel Administrativo</h1>
+            <p className="text-slate-600 mt-1">Gerencie sua plataforma fiscal</p>
+          </div>
         </div>
 
         {/* Stats Cards */}

@@ -1,5 +1,5 @@
 
-import { Search, User, ShoppingCart, Menu, Bell } from "lucide-react";
+import { Search, User, ShoppingCart, Menu, Bell, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
   isLoggedIn: boolean;
@@ -24,7 +25,7 @@ const Header = ({ isLoggedIn, setIsLoggedIn }: HeaderProps) => {
           <div className="flex justify-between items-center text-white text-sm">
             <div className="flex items-center space-x-4">
               <span>📞 (11) 3000-0000</span>
-              <span>✉️ contato@fiscalinsights.com.br</span>
+              <span>✉️ contato@conectafisco.com.br</span>
             </div>
             <div className="flex items-center space-x-4">
               <Button variant="ghost" size="sm" className="text-white hover:text-blue-100">
@@ -42,17 +43,17 @@ const Header = ({ isLoggedIn, setIsLoggedIn }: HeaderProps) => {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
+          <Link to="/" className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-emerald-600 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">FI</span>
+              <span className="text-white font-bold text-lg">CF</span>
             </div>
             <div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
-                Fiscal Insights
+                Conecta Fisco
               </h1>
-              <p className="text-sm text-slate-600">Plataforma de Gestão Fiscal</p>
+              <p className="text-sm text-slate-600">Conectando você ao universo fiscal</p>
             </div>
-          </div>
+          </Link>
 
           {/* Search Bar */}
           <div className="hidden md:flex flex-1 max-w-md mx-8">
@@ -87,6 +88,12 @@ const Header = ({ isLoggedIn, setIsLoggedIn }: HeaderProps) => {
                     <DropdownMenuItem>Meu Perfil</DropdownMenuItem>
                     <DropdownMenuItem>Meus Cursos</DropdownMenuItem>
                     <DropdownMenuItem>Assinatura</DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin" className="flex items-center">
+                        <Settings className="w-4 h-4 mr-2" />
+                        Painel Admin
+                      </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => setIsLoggedIn(false)}>
                       Sair
                     </DropdownMenuItem>
