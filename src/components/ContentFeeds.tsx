@@ -1,11 +1,20 @@
-
 import { Clock, MapPin, TrendingUp, FileText, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useState } from "react";
+import CadastroAcessoForm from "./forms/CadastroAcessoForm";
 
 const ContentFeeds = () => {
+  const [formOpen, setFormOpen] = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState("");
+
+  const handleProtectedClick = (menuTitle: string) => {
+    setSelectedMenu(menuTitle);
+    setFormOpen(true);
+  };
+
   const legislacoes = [
     {
       id: 1,
@@ -64,106 +73,128 @@ const ContentFeeds = () => {
   ];
 
   return (
-    <div className="space-y-6">
-      <Tabs defaultValue="legislacao" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="legislacao" className="flex items-center space-x-2">
-            <FileText className="w-4 h-4" />
-            <span>Últimas Legislações</span>
-          </TabsTrigger>
-          <TabsTrigger value="noticias" className="flex items-center space-x-2">
-            <TrendingUp className="w-4 h-4" />
-            <span>Notícias Recentes</span>
-          </TabsTrigger>
-        </TabsList>
+    <>
+      <div className="space-y-6">
+        <Tabs defaultValue="legislacao" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="legislacao" className="flex items-center space-x-2">
+              <FileText className="w-4 h-4" />
+              <span>Últimas Legislações</span>
+            </TabsTrigger>
+            <TabsTrigger value="noticias" className="flex items-center space-x-2">
+              <TrendingUp className="w-4 h-4" />
+              <span>Notícias Recentes</span>
+            </TabsTrigger>
+          </TabsList>
 
-        <TabsContent value="legislacao" className="space-y-4">
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg">Legislações Recentes</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {legislacoes.map((item) => (
-                <div key={item.id} className="border-b border-slate-200 last:border-b-0 pb-4 last:pb-0">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="font-semibold text-slate-800 hover:text-blue-600 cursor-pointer">
-                      {item.title}
-                    </h3>
-                    <Badge variant={item.type === "Federal" ? "default" : "secondary"} className="ml-2">
-                      {item.type}
-                    </Badge>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4 text-sm text-slate-600 mb-2">
-                    <span className="flex items-center">
-                      <Clock className="w-3 h-3 mr-1" />
-                      {new Date(item.date).toLocaleDateString('pt-BR')}
-                    </span>
-                    <span className="flex items-center">
-                      <MapPin className="w-3 h-3 mr-1" />
-                      {item.orgao}
-                    </span>
-                    <Badge variant="outline" className="text-xs">
-                      {item.categoria}
-                    </Badge>
-                  </div>
-                  
-                  <p className="text-sm text-slate-600 mb-3">
-                    {item.resumo}
-                  </p>
-                  
-                  <Button variant="outline" size="sm">
-                    <ExternalLink className="w-3 h-3 mr-2" />
-                    Ler Completo
+          <TabsContent value="legislacao" className="space-y-4">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">
+                  Legislações Recentes
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="ml-4"
+                    onClick={() => handleProtectedClick("Busca Avançada de Atos e Legislação")}
+                  >
+                    Busca Avançada 🔐
                   </Button>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </TabsContent>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {legislacoes.map((item) => (
+                  <div key={item.id} className="border-b border-slate-200 last:border-b-0 pb-4 last:pb-0">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className="font-semibold text-slate-800 hover:text-blue-600 cursor-pointer">
+                        {item.title}
+                      </h3>
+                      <Badge variant={item.type === "Federal" ? "default" : "secondary"} className="ml-2">
+                        {item.type}
+                      </Badge>
+                    </div>
+                    
+                    <div className="flex items-center space-x-4 text-sm text-slate-600 mb-2">
+                      <span className="flex items-center">
+                        <Clock className="w-3 h-3 mr-1" />
+                        {new Date(item.date).toLocaleDateString('pt-BR')}
+                      </span>
+                      <span className="flex items-center">
+                        <MapPin className="w-3 h-3 mr-1" />
+                        {item.orgao}
+                      </span>
+                      <Badge variant="outline" className="text-xs">
+                        {item.categoria}
+                      </Badge>
+                    </div>
+                    
+                    <p className="text-sm text-slate-600 mb-3">
+                      {item.resumo}
+                    </p>
+                    
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      onClick={() => handleProtectedClick("Ler Completo")}
+                    >
+                      <ExternalLink className="w-3 h-3 mr-2" />
+                      Ler Completo 🔐
+                    </Button>
+                  </div>
+                ))}
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-        <TabsContent value="noticias" className="space-y-4">
-          <Card>
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg">Notícias em Destaque</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              {noticias.map((item) => (
-                <div key={item.id} className="border-b border-slate-200 last:border-b-0 pb-4 last:pb-0">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className={`font-semibold hover:text-blue-600 cursor-pointer ${
-                      item.destaque ? 'text-blue-700' : 'text-slate-800'
-                    }`}>
-                      {item.destaque && <span className="text-red-500 mr-2">🔥</span>}
-                      {item.title}
-                    </h3>
-                    <Badge variant={item.tipo === "Federal" ? "default" : "secondary"} className="ml-2">
-                      {item.tipo}
-                    </Badge>
+          <TabsContent value="noticias" className="space-y-4">
+            <Card>
+              <CardHeader className="pb-3">
+                <CardTitle className="text-lg">Notícias em Destaque</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {noticias.map((item) => (
+                  <div key={item.id} className="border-b border-slate-200 last:border-b-0 pb-4 last:pb-0">
+                    <div className="flex items-start justify-between mb-2">
+                      <h3 className={`font-semibold hover:text-blue-600 cursor-pointer ${
+                        item.destaque ? 'text-blue-700' : 'text-slate-800'
+                      }`}>
+                        {item.destaque && <span className="text-red-500 mr-2">🔥</span>}
+                        {item.title}
+                      </h3>
+                      <Badge variant={item.tipo === "Federal" ? "default" : "secondary"} className="ml-2">
+                        {item.tipo}
+                      </Badge>
+                    </div>
+                    
+                    <div className="flex items-center space-x-4 text-sm text-slate-600 mb-2">
+                      <span className="flex items-center">
+                        <Clock className="w-3 h-3 mr-1" />
+                        {new Date(item.date).toLocaleDateString('pt-BR')}
+                      </span>
+                    </div>
+                    
+                    <p className="text-sm text-slate-600 mb-3">
+                      {item.resumo}
+                    </p>
+                    
+                    <Button variant="outline" size="sm">
+                      <ExternalLink className="w-3 h-3 mr-2" />
+                      Ler Matéria
+                    </Button>
                   </div>
-                  
-                  <div className="flex items-center space-x-4 text-sm text-slate-600 mb-2">
-                    <span className="flex items-center">
-                      <Clock className="w-3 h-3 mr-1" />
-                      {new Date(item.date).toLocaleDateString('pt-BR')}
-                    </span>
-                  </div>
-                  
-                  <p className="text-sm text-slate-600 mb-3">
-                    {item.resumo}
-                  </p>
-                  
-                  <Button variant="outline" size="sm">
-                    <ExternalLink className="w-3 h-3 mr-2" />
-                    Ler Matéria
-                  </Button>
-                </div>
-              ))}
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
-    </div>
+                ))}
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      </div>
+
+      <CadastroAcessoForm
+        isOpen={formOpen}
+        onClose={() => setFormOpen(false)}
+        menuTitle={selectedMenu}
+      />
+    </>
   );
 };
 

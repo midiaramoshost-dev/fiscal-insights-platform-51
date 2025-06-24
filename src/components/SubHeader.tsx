@@ -7,8 +7,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
+import { useState } from "react";
+import CadastroAcessoForm from "./forms/CadastroAcessoForm";
 
 const SubHeader = () => {
+  const [formOpen, setFormOpen] = useState(false);
+  const [selectedMenu, setSelectedMenu] = useState("");
+
+  const handleMenuClick = (menuTitle: string) => {
+    setSelectedMenu(menuTitle);
+    setFormOpen(true);
+  };
+
   const menuItems = [
     {
       title: "SIMPLES",
@@ -52,36 +62,55 @@ const SubHeader = () => {
     }
   ];
 
+  // Menus que requerem cadastro
+  const menusComCadastro = ["IR", "PIS/COFINS", "ICMS/ISS/IPI", "Trabalho e Previdência", "SPED", "Contabilidade", "Reforma da Previdência"];
+
   return (
-    <div className="bg-gradient-to-r from-slate-700 to-slate-800 border-b border-slate-600">
-      <div className="container mx-auto px-4">
-        <nav className="flex items-center space-x-1 overflow-x-auto py-3">
-          {menuItems.map((menu, index) => (
-            <DropdownMenu key={index}>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="text-white hover:bg-slate-600 hover:text-white whitespace-nowrap text-sm font-medium flex items-center space-x-1 px-3 py-2"
-                >
-                  <span>{menu.title}</span>
-                  <ChevronDown className="w-3 h-3" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 bg-white shadow-lg border border-slate-200">
-                {menu.items.map((item, itemIndex) => (
-                  <DropdownMenuItem
-                    key={itemIndex}
-                    className="hover:bg-blue-50 hover:text-blue-700 cursor-pointer"
+    <>
+      <div className="bg-gradient-to-r from-slate-700 to-slate-800 border-b border-slate-600">
+        <div className="container mx-auto px-4">
+          <nav className="flex items-center space-x-1 overflow-x-auto py-3">
+            {menuItems.map((menu, index) => (
+              <DropdownMenu key={index}>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="text-white hover:bg-slate-600 hover:text-white whitespace-nowrap text-sm font-medium flex items-center space-x-1 px-3 py-2"
                   >
-                    {item}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ))}
-        </nav>
+                    <span>{menu.title}</span>
+                    <ChevronDown className="w-3 h-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 bg-white shadow-lg border border-slate-200">
+                  {menu.items.map((item, itemIndex) => (
+                    <DropdownMenuItem
+                      key={itemIndex}
+                      className="hover:bg-blue-50 hover:text-blue-700 cursor-pointer"
+                      onClick={() => {
+                        if (menusComCadastro.includes(menu.title)) {
+                          handleMenuClick(`${menu.title} - ${item}`);
+                        }
+                      }}
+                    >
+                      {item}
+                      {menusComCadastro.includes(menu.title) && (
+                        <span className="ml-auto text-xs text-blue-600">🔐</span>
+                      )}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ))}
+          </nav>
+        </div>
       </div>
-    </div>
+
+      <CadastroAcessoForm
+        isOpen={formOpen}
+        onClose={() => setFormOpen(false)}
+        menuTitle={selectedMenu}
+      />
+    </>
   );
 };
 
