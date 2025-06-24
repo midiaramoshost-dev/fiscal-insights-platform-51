@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Users, Plus, Pencil, Trash2, Search, Filter } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,11 +8,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useAdmin, Usuario } from "@/contexts/AdminContext";
+import { useUsuarios } from "@/contexts/UsuariosContext";
+import { Usuario } from "@/types/admin";
 import { toast } from "@/hooks/use-toast";
 
 const UsuariosManager = () => {
-  const { usuarios, adicionarUsuario, atualizarUsuario, removerUsuario } = useAdmin();
+  const { usuarios, adicionarUsuario, atualizarUsuario, removerUsuario } = useUsuarios();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterPlano, setFilterPlano] = useState("todos");
   const [isDialogOpen, setIsDialogOpen] = useState(false);

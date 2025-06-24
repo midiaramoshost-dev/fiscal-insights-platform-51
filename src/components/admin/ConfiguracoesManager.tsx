@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Settings, Save, Plus, Pencil, Trash2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,17 +9,22 @@ import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useAdmin, ConfiguracaoSistema } from "@/contexts/AdminContext";
+import { useConfiguracoes } from "@/contexts/ConfiguracoesContext";
+import { useIndices } from "@/contexts/IndicesContext";
+import { ConfiguracaoSistema } from "@/types/admin";
 import { toast } from "@/hooks/use-toast";
 
 const ConfiguracoesManager = () => {
   const { 
     configuracoesSistema, 
     atualizarConfiguracao, 
-    adicionarConfiguracao,
+    adicionarConfiguracao
+  } = useConfiguracoes();
+  
+  const {
     configuracoes,
     setConfiguracoes 
-  } = useAdmin();
+  } = useIndices();
   
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [formData, setFormData] = useState({

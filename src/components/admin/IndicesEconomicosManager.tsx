@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -7,11 +6,12 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { RefreshCw, Plus, Edit2, Trash2, Settings, Save, X } from "lucide-react";
-import { useAdmin, IndiceEconomico } from "@/contexts/AdminContext";
+import { useIndices } from "@/contexts/IndicesContext";
+import { IndiceEconomico } from "@/types/admin";
 import { useToast } from "@/hooks/use-toast";
 
 const IndicesEconomicosManager = () => {
-  const { indices, atualizarIndice, adicionarIndice, removerIndice, atualizarTodosIndices, configuracoes, setConfiguracoes } = useAdmin();
+  const { indices, atualizarIndice, adicionarIndice, removerIndice, atualizarTodosIndices, configuracoes, setConfiguracoes } = useIndices();
   const { toast } = useToast();
   const [editandoId, setEditandoId] = useState<string | null>(null);
   const [novoIndice, setNovoIndice] = useState<Omit<IndiceEconomico, 'id'>>({

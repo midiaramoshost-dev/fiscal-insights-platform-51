@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { BookOpen, Plus, Pencil, Trash2, Search, Filter, Star } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,11 +9,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useAdmin, Curso } from "@/contexts/AdminContext";
+import { useCursosVendas } from "@/contexts/CursosVendasContext";
+import { Curso } from "@/types/admin";
 import { toast } from "@/hooks/use-toast";
 
 const CursosManager = () => {
-  const { cursos, adicionarCurso, atualizarCurso, removerCurso } = useAdmin();
+  const { cursos, adicionarCurso, atualizarCurso, removerCurso } = useCursosVendas();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategoria, setFilterCategoria] = useState("todas");
   const [isDialogOpen, setIsDialogOpen] = useState(false);

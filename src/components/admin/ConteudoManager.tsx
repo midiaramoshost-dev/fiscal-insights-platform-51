@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { FileText, Plus, Pencil, Trash2, Search, Filter, Eye } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,11 +9,12 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useAdmin, Artigo } from "@/contexts/AdminContext";
+import { useConteudo } from "@/contexts/ConteudoContext";
+import { Artigo } from "@/types/admin";
 import { toast } from "@/hooks/use-toast";
 
 const ConteudoManager = () => {
-  const { artigos, adicionarArtigo, atualizarArtigo, removerArtigo, secoesTematicas } = useAdmin();
+  const { artigos, adicionarArtigo, atualizarArtigo, removerArtigo, secoesTematicas } = useConteudo();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterCategoria, setFilterCategoria] = useState("todas");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
