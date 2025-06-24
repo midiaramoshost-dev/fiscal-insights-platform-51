@@ -8,15 +8,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import CadastroAcessoForm from "./forms/CadastroAcessoForm";
+import AssinaturaPremiumForm from "./forms/AssinaturaPremiumForm";
 
 const SubHeader = () => {
-  const [formOpen, setFormOpen] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState("");
+  const [premiumFormOpen, setPremiumFormOpen] = useState(false);
 
-  const handleMenuClick = (menuTitle: string) => {
-    setSelectedMenu(menuTitle);
-    setFormOpen(true);
+  const handleMenuClick = () => {
+    setPremiumFormOpen(true);
   };
 
   const menuItems = [
@@ -62,8 +60,7 @@ const SubHeader = () => {
     }
   ];
 
-  // Menus que requerem cadastro
-  const menusComCadastro = ["IR", "PIS/COFINS", "ICMS/ISS/IPI", "Trabalho e Previdência", "SPED", "Contabilidade", "Reforma da Previdência"];
+  const menusComPremium = ["IR", "PIS/COFINS", "ICMS/ISS/IPI", "Trabalho e Previdência", "SPED", "Contabilidade", "Reforma da Previdência"];
 
   return (
     <>
@@ -87,14 +84,14 @@ const SubHeader = () => {
                       key={itemIndex}
                       className="hover:bg-blue-50 hover:text-blue-700 cursor-pointer"
                       onClick={() => {
-                        if (menusComCadastro.includes(menu.title)) {
-                          handleMenuClick(`${menu.title} - ${item}`);
+                        if (menusComPremium.includes(menu.title)) {
+                          handleMenuClick();
                         }
                       }}
                     >
                       {item}
-                      {menusComCadastro.includes(menu.title) && (
-                        <span className="ml-auto text-xs text-blue-600">🔐</span>
+                      {menusComPremium.includes(menu.title) && (
+                        <span className="ml-auto text-xs text-blue-600">👑</span>
                       )}
                     </DropdownMenuItem>
                   ))}
@@ -105,10 +102,9 @@ const SubHeader = () => {
         </div>
       </div>
 
-      <CadastroAcessoForm
-        isOpen={formOpen}
-        onClose={() => setFormOpen(false)}
-        menuTitle={selectedMenu}
+      <AssinaturaPremiumForm
+        isOpen={premiumFormOpen}
+        onClose={() => setPremiumFormOpen(false)}
       />
     </>
   );

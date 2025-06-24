@@ -6,26 +6,23 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { useIndices } from "@/contexts/IndicesContext";
 import { useState } from "react";
-import CadastroAcessoForm from "./forms/CadastroAcessoForm";
 import AssinaturaPremiumForm from "./forms/AssinaturaPremiumForm";
+import { Link } from "react-router-dom";
 
 const RightSidebar = () => {
   const { indices } = useIndices();
-  const [formOpen, setFormOpen] = useState(false);
   const [premiumFormOpen, setPremiumFormOpen] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState("");
 
-  const handleProtectedClick = (menuTitle: string) => {
-    setSelectedMenu(menuTitle);
-    setFormOpen(true);
+  const handleProtectedClick = () => {
+    setPremiumFormOpen(true);
   };
 
   const ferramentas = [
-    { nome: "Calculadora de INSS", icone: Calculator, popular: true },
-    { nome: "Simulador Simples Nacional", icone: Percent, popular: true },
-    { nome: "Custo de Funcionário", icone: DollarSign, popular: false },
-    { nome: "Alíquotas por Estado", icone: TrendingUp, popular: false },
-    { nome: "Códigos de Receita", icone: BookOpen, popular: false }
+    { nome: "Calculadora de INSS", icone: Calculator, popular: true, link: "/ferramentas" },
+    { nome: "Simulador Simples Nacional", icone: Percent, popular: true, link: "/ferramentas" },
+    { nome: "Custo de Funcionário", icone: DollarSign, popular: false, link: "/ferramentas" },
+    { nome: "Alíquotas por Estado", icone: TrendingUp, popular: false, link: "/ferramentas" },
+    { nome: "Códigos de Receita", icone: BookOpen, popular: false, link: "/ferramentas" }
   ];
 
   const publicacoes = [
@@ -54,14 +51,17 @@ const RightSidebar = () => {
                   key={index}
                   variant="ghost" 
                   className="w-full justify-start bg-white/80 hover:bg-white hover:text-emerald-700 border border-emerald-200"
+                  asChild
                 >
-                  <IconComponent className="w-4 h-4 mr-3" />
-                  <span className="flex-1 text-left">{ferramenta.nome}</span>
-                  {ferramenta.popular && (
-                    <Badge variant="secondary" className="text-xs bg-orange-100 text-orange-700">
-                      Popular
-                    </Badge>
-                  )}
+                  <Link to={ferramenta.link}>
+                    <IconComponent className="w-4 h-4 mr-3" />
+                    <span className="flex-1 text-left">{ferramenta.nome}</span>
+                    {ferramenta.popular && (
+                      <Badge variant="secondary" className="text-xs bg-orange-100 text-orange-700">
+                        Popular
+                      </Badge>
+                    )}
+                  </Link>
                 </Button>
               );
             })}
@@ -100,7 +100,7 @@ const RightSidebar = () => {
                     }}
                   >
                     <Download className="w-3 h-3" />
-                    {pub.premium && <span className="ml-1">🔐</span>}
+                    {pub.premium && <span className="ml-1">👑</span>}
                   </Button>
                 </div>
               </div>
@@ -109,14 +109,14 @@ const RightSidebar = () => {
               variant="outline" 
               size="sm" 
               className="w-full"
-              onClick={() => handleProtectedClick("Ver Todas as Publicações")}
+              onClick={handleProtectedClick}
             >
-              Ver Todas as Publicações 🔐
+              Ver Todas as Publicações 👑
             </Button>
           </CardContent>
         </Card>
 
-        {/* Índices Econômicos - Agora dinâmicos */}
+        {/* Índices Econômicos */}
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center space-x-2 text-slate-800">
@@ -186,12 +186,6 @@ const RightSidebar = () => {
           </CardContent>
         </Card>
       </div>
-
-      <CadastroAcessoForm
-        isOpen={formOpen}
-        onClose={() => setFormOpen(false)}
-        menuTitle={selectedMenu}
-      />
 
       <AssinaturaPremiumForm
         isOpen={premiumFormOpen}

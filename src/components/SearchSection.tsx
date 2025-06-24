@@ -5,13 +5,13 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
-import CadastroAcessoForm from "./forms/CadastroAcessoForm";
+import AssinaturaPremiumForm from "./forms/AssinaturaPremiumForm";
 
 const SearchSection = () => {
-  const [formOpen, setFormOpen] = useState(false);
+  const [premiumFormOpen, setPremiumFormOpen] = useState(false);
 
   const handleProtectedSearch = () => {
-    setFormOpen(true);
+    setPremiumFormOpen(true);
   };
 
   return (
@@ -99,7 +99,7 @@ const SearchSection = () => {
                 onClick={handleProtectedSearch}
               >
                 <Search className="w-4 h-4 mr-2" />
-                Buscar 🔐
+                Buscar 👑
               </Button>
             </div>
           </div>
@@ -111,7 +111,7 @@ const SearchSection = () => {
               onClick={handleProtectedSearch}
             >
               <Filter className="w-4 h-4 mr-2" />
-              Filtros Avançados 🔐
+              Filtros Avançados 👑
             </Button>
             <span className="text-sm text-slate-600">
               Mais de 50.000 documentos catalogados
@@ -120,10 +120,9 @@ const SearchSection = () => {
         </CardContent>
       </Card>
 
-      <CadastroAcessoForm
-        isOpen={formOpen}
-        onClose={() => setFormOpen(false)}
-        menuTitle="Busca Avançada de Atos e Legislação"
+      <AssinaturaPremiumForm
+        isOpen={premiumFormOpen}
+        onClose={() => setPremiumFormOpen(false)}
       />
     </>
   );

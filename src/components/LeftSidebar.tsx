@@ -1,81 +1,88 @@
 
-import { Calendar, Link, Star, TrendingUp, Clock } from "lucide-react";
+import { Calendar, ExternalLink, TrendingUp, FileText, Clock } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
-import CadastroAcessoForm from "./forms/CadastroAcessoForm";
+import AssinaturaPremiumForm from "./forms/AssinaturaPremiumForm";
 
 const LeftSidebar = () => {
-  const [formOpen, setFormOpen] = useState(false);
-  const [selectedMenu, setSelectedMenu] = useState("");
+  const [premiumFormOpen, setPremiumFormOpen] = useState(false);
 
-  const handleProtectedClick = (menuTitle: string) => {
-    setSelectedMenu(menuTitle);
-    setFormOpen(true);
+  const handleProtectedClick = () => {
+    setPremiumFormOpen(true);
   };
 
-  const obrigacoes = [
-    { data: "2024-01-20", titulo: "DARF - IRPJ/CSLL", tipo: "Federal", urgencia: "alta" },
-    { data: "2024-01-25", titulo: "EFD-Contribuições", tipo: "Federal", urgencia: "media" },
-    { data: "2024-01-31", titulo: "SPED Fiscal", tipo: "Estadual", urgencia: "alta" },
-    { data: "2024-02-07", titulo: "eSocial - Eventos", tipo: "Federal", urgencia: "baixa" },
-    { data: "2024-02-15", titulo: "DIRF 2024", tipo: "Federal", urgencia: "alta" }
-  ];
-
-  const topicos = [
-    { titulo: "Reforma Tributária 2024", visualizacoes: 1250, novo: true },
-    { titulo: "eSocial - Novidades", visualizacoes: 980, novo: false },
-    { titulo: "ICMS-ST Combustíveis", visualizacoes: 850, novo: true },
-    { titulo: "PIX e Tributação", visualizacoes: 720, novo: false }
+  const calendarioFiscal = [
+    { data: "15/01", evento: "DARF - Pessoa Jurídica", tipo: "Federal" },
+    { data: "20/01", evento: "FGTS", tipo: "Trabalhista" },
+    { data: "25/01", evento: "Simples Nacional", tipo: "Federal" },
+    { data: "31/01", evento: "DEFIS", tipo: "Federal" }
   ];
 
   const linksRapidos = [
-    { nome: "Calculadora de Impostos", url: "https://www.receita.fazenda.gov.br/aplicacoes/atrjo/simulador/simulador.asp" },
-    { nome: "Tabela de Alíquotas", url: "https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/tributos/contribuicoes-sociais/pis-pasep-e-cofins" },
-    { nome: "Códigos de Receita", url: "https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/pagamentos-e-parcelamentos/darf-documento-de-arrecadacao-de-receitas-federais/codigos-de-receita-tributos-federais" },
-    { nome: "Simulador Simples Nacional", url: "https://www8.receita.fazenda.gov.br/SimplesNacional/aplicacoes.aspx?id=21" },
-    { nome: "Calendário Completo", url: "#", protegido: true }
+    { nome: "Receita Federal", url: "https://www.gov.br/receitafederal", categoria: "Governo" },
+    { nome: "Banco Central", url: "https://www.bcb.gov.br", categoria: "Governo" },
+    { nome: "Portal eSocial", url: "https://www.gov.br/esocial", categoria: "Governo" },
+    { nome: "SPED", url: "https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/declaracoes-e-demonstrativos/sped", categoria: "SPED" },
+    { nome: "Simples Nacional", url: "https://www8.receita.fazenda.gov.br/simplesnacional", categoria: "Governo" },
+    { nome: "CFC - Conselho Federal", url: "https://cfc.org.br", categoria: "Conselho" }
+  ];
+
+  const legislacoesRecentes = [
+    {
+      titulo: "Lei nº 14.020/2024",
+      descricao: "Nova regulamentação do eSocial",
+      data: "10/01/2024",
+      tipo: "Lei",
+      premium: true
+    },
+    {
+      titulo: "IN RFB nº 2.201/2024",
+      descricao: "Alterações no SPED Fiscal",
+      data: "08/01/2024",
+      tipo: "IN",
+      premium: false
+    },
+    {
+      titulo: "Portaria ME nº 15/2024",
+      descricao: "Novos códigos de receita",
+      data: "05/01/2024",
+      tipo: "Portaria",
+      premium: true
+    }
   ];
 
   return (
     <>
       <div className="space-y-6">
-        {/* Calendário de Obrigações */}
-        <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+        {/* Calendário Fiscal */}
+        <Card>
           <CardHeader className="pb-3">
-            <CardTitle className="flex items-center space-x-2 text-blue-800">
+            <CardTitle className="flex items-center space-x-2 text-slate-800">
               <Calendar className="w-5 h-5" />
-              <span>Próximas Obrigações</span>
+              <span>Calendário Fiscal</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {obrigacoes.slice(0, 4).map((obrigacao, index) => (
-              <div key={index} className="bg-white/80 rounded-lg p-3 border border-blue-200">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-xs font-medium text-slate-600">
-                    {new Date(obrigacao.data).toLocaleDateString('pt-BR')}
-                  </span>
-                  <Badge 
-                    variant={obrigacao.urgencia === 'alta' ? 'destructive' : 
-                             obrigacao.urgencia === 'media' ? 'default' : 'secondary'}
-                    className="text-xs"
-                  >
-                    {obrigacao.urgencia === 'alta' ? 'Urgente' : 
-                     obrigacao.urgencia === 'media' ? 'Médio' : 'Baixo'}
+            {calendarioFiscal.map((item, index) => (
+              <div key={index} className="flex items-center justify-between border-l-4 border-blue-400 pl-3 py-2">
+                <div>
+                  <span className="font-medium text-slate-800">{item.data}</span>
+                  <p className="text-sm text-slate-600">{item.evento}</p>
+                  <Badge variant="secondary" className="text-xs mt-1">
+                    {item.tipo}
                   </Badge>
                 </div>
-                <h4 className="font-medium text-sm text-slate-800">{obrigacao.titulo}</h4>
-                <span className="text-xs text-slate-600">{obrigacao.tipo}</span>
               </div>
             ))}
             <Button 
               variant="outline" 
               size="sm" 
-              className="w-full mt-3"
-              onClick={() => handleProtectedClick("Ver Calendário Completo")}
+              className="w-full"
+              onClick={handleProtectedClick}
             >
-              Ver Calendário Completo 🔐
+              Ver Calendário Completo 👑
             </Button>
           </CardContent>
         </Card>
@@ -84,7 +91,7 @@ const LeftSidebar = () => {
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center space-x-2 text-slate-800">
-              <Link className="w-5 h-5" />
+              <ExternalLink className="w-5 h-5" />
               <span>Links Rápidos</span>
             </CardTitle>
           </CardHeader>
@@ -93,55 +100,87 @@ const LeftSidebar = () => {
               <Button 
                 key={index}
                 variant="ghost" 
-                className="w-full justify-start text-sm hover:bg-blue-50 hover:text-blue-700"
-                onClick={() => {
-                  if (link.protegido) {
-                    handleProtectedClick(link.nome);
-                  } else {
-                    window.open(link.url, '_blank');
-                  }
-                }}
+                size="sm" 
+                className="w-full justify-start hover:bg-blue-50 hover:text-blue-700"
+                asChild
               >
-                {link.nome}
-                {link.protegido && <span className="ml-auto text-xs">🔐</span>}
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="w-4 h-4 mr-2" />
+                  {link.nome}
+                </a>
               </Button>
             ))}
           </CardContent>
         </Card>
 
-        {/* Tópicos em Destaque */}
+        {/* Legislações Recentes */}
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center space-x-2 text-slate-800">
-              <Star className="w-5 h-5 text-yellow-500" />
-              <span>Tópicos em Destaque</span>
+              <FileText className="w-5 h-5" />
+              <span>Legislações Recentes</span>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            {topicos.map((topico, index) => (
-              <div key={index} className="hover:bg-slate-50 p-2 rounded-lg cursor-pointer transition-colors">
-                <div className="flex items-center justify-between mb-1">
-                  <h4 className="font-medium text-sm text-slate-800">{topico.titulo}</h4>
-                  {topico.novo && (
-                    <Badge variant="secondary" className="text-xs bg-green-100 text-green-700">
-                      Novo
+            {legislacoesRecentes.map((leg, index) => (
+              <div key={index} className="border border-slate-200 rounded-lg p-3 hover:bg-slate-50 transition-colors cursor-pointer"
+                   onClick={() => leg.premium && handleProtectedClick()}>
+                <div className="flex items-start justify-between mb-2">
+                  <h4 className="font-medium text-sm text-slate-800">{leg.titulo}</h4>
+                  {leg.premium && (
+                    <Badge className="text-xs bg-gradient-to-r from-yellow-400 to-orange-400 text-white">
+                      Premium
                     </Badge>
                   )}
                 </div>
-                <div className="flex items-center text-xs text-slate-600">
-                  <TrendingUp className="w-3 h-3 mr-1" />
-                  {topico.visualizacoes} visualizações
+                <p className="text-xs text-slate-600 mb-2">{leg.descricao}</p>
+                <div className="flex items-center justify-between text-xs text-slate-500">
+                  <div className="flex items-center">
+                    <Clock className="w-3 h-3 mr-1" />
+                    {leg.data}
+                  </div>
+                  <Badge variant="outline" className="text-xs">{leg.tipo}</Badge>
                 </div>
+                {leg.premium && (
+                  <Button size="sm" className="w-full mt-2 h-6 text-xs" onClick={handleProtectedClick}>
+                    Ler Completo 👑
+                  </Button>
+                )}
               </div>
             ))}
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="w-full"
+              onClick={handleProtectedClick}
+            >
+              Legislações Recentes 👑
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Tendências */}
+        <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+          <CardHeader className="pb-3">
+            <CardTitle className="flex items-center space-x-2 text-orange-800">
+              <TrendingUp className="w-5 h-5" />
+              <span>Em Alta</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2">
+            <div className="text-sm text-orange-700">
+              <p className="font-medium">• eSocial versão 2.5</p>
+              <p className="font-medium">• PIX no SPED</p>
+              <p className="font-medium">• Marco do Saneamento</p>
+              <p className="font-medium">• LGPD Fiscal</p>
+            </div>
           </CardContent>
         </Card>
       </div>
 
-      <CadastroAcessoForm
-        isOpen={formOpen}
-        onClose={() => setFormOpen(false)}
-        menuTitle={selectedMenu}
+      <AssinaturaPremiumForm
+        isOpen={premiumFormOpen}
+        onClose={() => setPremiumFormOpen(false)}
       />
     </>
   );

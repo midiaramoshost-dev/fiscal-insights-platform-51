@@ -28,11 +28,11 @@ const Header = ({ isLoggedIn, setIsLoggedIn }: HeaderProps) => {
               <span>✉️ contato@conectafisco.com.br</span>
             </div>
             <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="sm" className="text-white hover:text-blue-100">
-                Newsletter
+              <Button variant="ghost" size="sm" className="text-white hover:text-blue-100" asChild>
+                <Link to="/newsletter">Newsletter</Link>
               </Button>
-              <Button variant="ghost" size="sm" className="text-white hover:text-blue-100">
-                Quem Somos
+              <Button variant="ghost" size="sm" className="text-white hover:text-blue-100" asChild>
+                <Link to="/quem-somos">Quem Somos</Link>
               </Button>
             </div>
           </div>
@@ -138,10 +138,15 @@ const Header = ({ isLoggedIn, setIsLoggedIn }: HeaderProps) => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-48">
-                <DropdownMenuItem>Softwares Fiscais</DropdownMenuItem>
-                <DropdownMenuItem>Consultoria Especializada</DropdownMenuItem>
-                <DropdownMenuItem>Ferramentas Online</DropdownMenuItem>
-                <DropdownMenuItem>Relatórios Customizados</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/softwares">Softwares Fiscais</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/consultoria">Consultoria Especializada</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/ferramentas">Ferramentas Online</Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -152,33 +157,24 @@ const Header = ({ isLoggedIn, setIsLoggedIn }: HeaderProps) => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-48">
-                <DropdownMenuItem>Cursos EAD</DropdownMenuItem>
-                <DropdownMenuItem>Cursos Presenciais</DropdownMenuItem>
-                <DropdownMenuItem>Treinamentos In Company</DropdownMenuItem>
-                <DropdownMenuItem>Certificações</DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/cursos/ead">Cursos EAD</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/cursos/presencial">Cursos Presenciais</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/cursos/incompany">Treinamentos In Company</Link>
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="font-medium hover:text-blue-600">
-                  Loja
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-48">
-                <DropdownMenuItem>Livros Especializados</DropdownMenuItem>
-                <DropdownMenuItem>Materiais de Estudo</DropdownMenuItem>
-                <DropdownMenuItem>Modelos de Documentos</DropdownMenuItem>
-                <DropdownMenuItem>Planilhas e Templates</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <Button variant="ghost" className="font-medium hover:text-blue-600">
-              Suporte
+            <Button variant="ghost" className="font-medium hover:text-blue-600" asChild>
+              <Link to="/suporte">Suporte</Link>
             </Button>
             
-            <Button variant="ghost" className="font-medium hover:text-blue-600">
-              Fale Conosco
+            <Button variant="ghost" className="font-medium hover:text-blue-600" asChild>
+              <Link to="/contato">Fale Conosco</Link>
             </Button>
           </div>
         </nav>
