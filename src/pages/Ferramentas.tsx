@@ -6,10 +6,18 @@ import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import { useState } from "react";
 import AssinaturaPremiumForm from "@/components/forms/AssinaturaPremiumForm";
+import FerramentaPersonalizadaForm from "@/components/forms/FerramentaPersonalizadaForm";
+import CalculadoraINSSForm from "@/components/forms/CalculadoraINSSForm";
+import SimuladorSimplesForm from "@/components/forms/SimuladorSimplesForm";
+import ConsultaCodigosForm from "@/components/forms/ConsultaCodigosForm";
 
 const Ferramentas = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [premiumFormOpen, setPremiumFormOpen] = useState(false);
+  const [ferramentaPersonalizadaOpen, setFerramentaPersonalizadaOpen] = useState(false);
+  const [calculadoraINSSOpen, setCalculadoraINSSOpen] = useState(false);
+  const [simuladorSimplesOpen, setSimuladorSimplesOpen] = useState(false);
+  const [consultaCodigosOpen, setConsultaCodigosOpen] = useState(false);
 
   const ferramentas = [
     {
@@ -17,50 +25,50 @@ const Ferramentas = () => {
       descricao: "Calcule as contribuições previdenciárias de forma rápida e precisa",
       icone: Calculator,
       gratuita: true,
-      popular: true
+      popular: true,
+      action: () => setCalculadoraINSSOpen(true)
     },
     {
       nome: "Simulador Simples Nacional",
       descricao: "Simule os tributos do Simples Nacional por faixa de faturamento",
       icone: Percent,
       gratuita: true,
-      popular: true
+      popular: true,
+      action: () => setSimuladorSimplesOpen(true)
     },
     {
       nome: "Calculadora de Custo de Funcionário",
       descricao: "Calcule o custo real de um funcionário incluindo todos os encargos",
       icone: DollarSign,
       gratuita: false,
-      popular: false
+      popular: false,
+      action: () => setPremiumFormOpen(true)
     },
     {
       nome: "Tabela de Alíquotas por Estado",
       descricao: "Consulte as alíquotas de ICMS, ISS e outros tributos por estado",
       icone: TrendingUp,
       gratuita: false,
-      popular: false
+      popular: false,
+      action: () => setPremiumFormOpen(true)
     },
     {
       nome: "Gerador de DARF",
       descricao: "Gere DARFs automaticamente com cálculo de juros e multas",
       icone: FileText,
       gratuita: false,
-      popular: false
+      popular: false,
+      action: () => setPremiumFormOpen(true)
     },
     {
       nome: "Consulta de Códigos de Receita",
       descricao: "Base completa de códigos de receita da Receita Federal",
       icone: FileText,
       gratuita: true,
-      popular: false
+      popular: false,
+      action: () => setConsultaCodigosOpen(true)
     }
   ];
-
-  const handleFerramentaClick = (ferramenta: any) => {
-    if (!ferramenta.gratuita) {
-      setPremiumFormOpen(true);
-    }
-  };
 
   return (
     <>
@@ -82,7 +90,7 @@ const Ferramentas = () => {
               {ferramentas.map((ferramenta, index) => {
                 const IconComponent = ferramenta.icone;
                 return (
-                  <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow cursor-pointer" onClick={() => handleFerramentaClick(ferramenta)}>
+                  <Card key={index} className="bg-white shadow-lg hover:shadow-xl transition-shadow cursor-pointer" onClick={ferramenta.action}>
                     <CardHeader>
                       <div className="flex items-start justify-between">
                         <CardTitle className="flex items-center text-slate-800">
@@ -114,7 +122,7 @@ const Ferramentas = () => {
                           ? 'bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700' 
                           : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
                         }`}
-                        onClick={() => handleFerramentaClick(ferramenta)}
+                        onClick={ferramenta.action}
                       >
                         {ferramenta.gratuita ? 'Usar Agora' : 'Assinar Premium'}
                         {!ferramenta.gratuita && <span className="ml-2">👑</span>}
@@ -135,7 +143,10 @@ const Ferramentas = () => {
                 <p className="text-slate-600 mb-6">
                   Nossa equipe pode desenvolver ferramentas personalizadas para suas necessidades específicas.
                 </p>
-                <Button className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700">
+                <Button 
+                  className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700"
+                  onClick={() => setFerramentaPersonalizadaOpen(true)}
+                >
                   Solicitar Ferramenta Personalizada
                 </Button>
               </CardContent>
@@ -147,6 +158,26 @@ const Ferramentas = () => {
       <AssinaturaPremiumForm
         isOpen={premiumFormOpen}
         onClose={() => setPremiumFormOpen(false)}
+      />
+
+      <FerramentaPersonalizadaForm
+        isOpen={ferramentaPersonalizadaOpen}
+        onClose={() => setFerramentaPersonalizadaOpen(false)}
+      />
+
+      <CalculadoraINSSForm
+        isOpen={calculadoraINSSOpen}
+        onClose={() => setCalculadoraINSSOpen(false)}
+      />
+
+      <SimuladorSimplesForm
+        isOpen={simuladorSimplesOpen}
+        onClose={() => setSimuladorSimplesOpen(false)}
+      />
+
+      <ConsultaCodigosForm
+        isOpen={consultaCodigosOpen}
+        onClose={() => setConsultaCodigosOpen(false)}
       />
     </>
   );

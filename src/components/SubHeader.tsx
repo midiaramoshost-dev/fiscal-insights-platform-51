@@ -60,7 +60,7 @@ const SubHeader = () => {
     }
   ];
 
-  const menusComPremium = ["IR", "PIS/COFINS", "ICMS/ISS/IPI", "Trabalho e Previdência", "SPED", "Contabilidade", "Reforma da Previdência"];
+  const menusComPremium = ["SIMPLES", "IR", "PIS/COFINS", "ICMS/ISS/IPI", "Trabalho e Previdência", "SPED", "Contabilidade", "Reforma da Previdência"];
 
   return (
     <>
