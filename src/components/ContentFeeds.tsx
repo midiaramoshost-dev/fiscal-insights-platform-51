@@ -1,10 +1,11 @@
+
 import { Clock, MapPin, TrendingUp, FileText, ExternalLink } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useState } from "react";
-import CadastroAcessoForm from "./forms/CadastroAcessoForm";
+import AssinaturaPremiumForm from "./forms/AssinaturaPremiumForm";
 
 const ContentFeeds = () => {
   const [formOpen, setFormOpen] = useState(false);
@@ -189,7 +190,7 @@ const ContentFeeds = () => {
         </Tabs>
       </div>
 
-      <CadastroAcessoForm
+      <AssinaturaPremiumForm
         isOpen={formOpen}
         onClose={() => setFormOpen(false)}
         menuTitle={selectedMenu}
