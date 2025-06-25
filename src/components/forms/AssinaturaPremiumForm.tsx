@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,9 +13,10 @@ import { useToast } from "@/hooks/use-toast";
 interface AssinaturaPremiumFormProps {
   isOpen: boolean;
   onClose: () => void;
+  menuTitle?: string;
 }
 
-const AssinaturaPremiumForm = ({ isOpen, onClose }: AssinaturaPremiumFormProps) => {
+const AssinaturaPremiumForm = ({ isOpen, onClose, menuTitle }: AssinaturaPremiumFormProps) => {
   const [formData, setFormData] = useState({
     // Dados Pessoais
     nome: '',
@@ -128,6 +128,7 @@ const AssinaturaPremiumForm = ({ isOpen, onClose }: AssinaturaPremiumFormProps) 
           <DialogTitle className="flex items-center space-x-2">
             <Crown className="w-5 h-5 text-yellow-500" />
             <span>Assinatura Premium</span>
+            {menuTitle && <span className="text-sm text-gray-500">- {menuTitle}</span>}
           </DialogTitle>
         </DialogHeader>
         
