@@ -1,20 +1,28 @@
 
-import { Users, FileText, Settings, BarChart3, Calendar, Book, ShoppingCart, MessageSquare, ArrowLeft, TrendingUp } from "lucide-react";
+import { Users, FileText, Settings, BarChart3, Calendar, Book, ShoppingCart, MessageSquare, ArrowLeft, TrendingUp, Key } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "react-router-dom";
 import { AdminProvider, useAdmin } from "@/contexts/AdminContext";
+import { useAdminAuth } from "@/contexts/AdminAuthContext";
+import AdminLogin from "./admin/AdminLogin";
 import IndicesEconomicosManager from "./admin/IndicesEconomicosManager";
 import UsuariosManager from "./admin/UsuariosManager";
 import ConteudoManager from "./admin/ConteudoManager";
 import CursosManager from "./admin/CursosManager";
 import VendasManager from "./admin/VendasManager";
 import ConfiguracoesManager from "./admin/ConfiguracoesManager";
+import ApiConfigManager from "./admin/ApiConfigManager";
 
 const AdminPanelContent = () => {
   const { artigos, indices, linksExternos, usuarios, cursos, vendas } = useAdmin();
+  const { isAdminAuthenticated, adminLogout } = useAdminAuth();
+
+  if (!isAdminAuthenticated) {
+    return <AdminLogin />;
+  }
 
   const stats = [
     { label: "Usuários Ativos", value: usuarios.length.toString(), change: "+12%", icon: Users, color: "text-blue-600" },
@@ -42,6 +50,9 @@ const AdminPanelContent = () => {
                 </div>
                 <span className="text-lg font-semibold text-slate-800">Conecta Fisco</span>
               </div>
+              <Button variant="outline" size="sm" onClick={adminLogout}>
+                Sair
+              </Button>
             </div>
             <h1 className="text-3xl font-bold text-slate-800">Painel Administrativo</h1>
             <p className="text-slate-600 mt-1">Gerencie sua plataforma fiscal</p>
@@ -73,7 +84,7 @@ const AdminPanelContent = () => {
 
         {/* Main Content */}
         <Tabs defaultValue="usuarios" className="w-full">
-          <TabsList className="grid w-full grid-cols-7 mb-6">
+          <TabsList className="grid w-full grid-cols-8 mb-6">
             <TabsTrigger value="usuarios" className="flex items-center space-x-2">
               <Users className="w-4 h-4" />
               <span>Usuários</span>
@@ -93,6 +104,10 @@ const AdminPanelContent = () => {
             <TabsTrigger value="vendas" className="flex items-center space-x-2">
               <ShoppingCart className="w-4 h-4" />
               <span>Vendas</span>
+            </TabsTrigger>
+            <TabsTrigger value="api" className="flex items-center space-x-2">
+              <Key className="w-4 h-4" />
+              <span>API</span>
             </TabsTrigger>
             <TabsTrigger value="analytics" className="flex items-center space-x-2">
               <BarChart3 className="w-4 h-4" />
@@ -129,7 +144,15 @@ const AdminPanelContent = () => {
             <VendasManager />
           </TabsContent>
 
-          {/* Analytics - Mantendo placeholder por enquanto */}
+          {/* Configuração de API */}
+          <TabsContent value="api">
+            <div className="space-y-6">
+              <h2 className="text-xl font-semibold text-slate-800">Configuração de APIs</h2>
+              <ApiConfigManager />
+            </div>
+          </TabsContent>
+
+          {/* Analytics */}
           <TabsContent value="analytics">
             <Card>
               <CardHeader>

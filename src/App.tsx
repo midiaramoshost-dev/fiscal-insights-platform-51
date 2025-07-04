@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AdminProvider } from "@/contexts/AdminContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AdminPanel from "./components/AdminPanel";
@@ -28,35 +29,33 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
-      <AdminProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/auth" element={<AuthPage />} />
-              <Route path="/admin" element={
-                <ProtectedRoute>
-                  <AdminPanel />
-                </ProtectedRoute>
-              } />
-              <Route path="/quem-somos" element={<QuemSomos />} />
-              <Route path="/softwares" element={<Softwares />} />
-              <Route path="/consultoria" element={<Consultoria />} />
-              <Route path="/ferramentas" element={<Ferramentas />} />
-              <Route path="/cursos" element={<Cursos />} />
-              <Route path="/cursos/ead" element={<EAD />} />
-              <Route path="/cursos/presencial" element={<Presencial />} />
-              <Route path="/cursos/incompany" element={<InCompany />} />
-              <Route path="/contato" element={<Contato />} />
-              <Route path="/newsletter" element={<Newsletter />} />
-              <Route path="/suporte" element={<Suporte />} />
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AdminProvider>
+      <AdminAuthProvider>
+        <AdminProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/auth" element={<AuthPage />} />
+                <Route path="/admin" element={<AdminPanel />} />
+                <Route path="/quem-somos" element={<QuemSomos />} />
+                <Route path="/softwares" element={<Softwares />} />
+                <Route path="/consultoria" element={<Consultoria />} />
+                <Route path="/ferramentas" element={<Ferramentas />} />
+                <Route path="/cursos" element={<Cursos />} />
+                <Route path="/cursos/ead" element={<EAD />} />
+                <Route path="/cursos/presencial" element={<Presencial />} />
+                <Route path="/cursos/incompany" element={<InCompany />} />
+                <Route path="/contato" element={<Contato />} />
+                <Route path="/newsletter" element={<Newsletter />} />
+                <Route path="/suporte" element={<Suporte />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </TooltipProvider>
+        </AdminProvider>
+      </AdminAuthProvider>
     </AuthProvider>
   </QueryClientProvider>
 );
