@@ -1,17 +1,14 @@
 
 import { useState } from "react";
-import { Users, Plus, Pencil, Trash2, Search, Filter } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Users, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { useUsuarios } from "@/contexts/UsuariosContext";
 import { Usuario } from "@/types/admin";
 import { toast } from "@/hooks/use-toast";
+import UsuarioForm from "./usuario/UsuarioForm";
+import UsuarioFilters from "./usuario/UsuarioFilters";
+import UsuarioTable from "./usuario/UsuarioTable";
 
 const UsuariosManager = () => {
   const { usuarios, adicionarUsuario, atualizarUsuario, removerUsuario } = useUsuarios();
@@ -91,170 +88,29 @@ const UsuariosManager = () => {
               Novo Usuário
             </Button>
           </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                {editingUser ? "Editar Usuário" : "Novo Usuário"}
-              </DialogTitle>
-            </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <Label htmlFor="nome">Nome</Label>
-                <Input
-                  id="nome"
-                  value={formData.nome}
-                  onChange={(e) => setFormData({...formData, nome: e.target.value})}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({...formData, email: e.target.value})}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="plano">Plano</Label>
-                <Select
-                  value={formData.plano}
-                  onValueChange={(value: Usuario['plano']) => 
-                    setFormData({...formData, plano: value})}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="gratuito">Gratuito</SelectItem>
-                    <SelectItem value="Básico">Básico</SelectItem>
-                    <SelectItem value="Premium">Premium</SelectItem>
-                    <SelectItem value="Corporativo">Corporativo</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="status">Status</Label>
-                <Select
-                  value={formData.status}
-                  onValueChange={(value: Usuario['status']) => 
-                    setFormData({...formData, status: value})}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="Ativo">Ativo</SelectItem>
-                    <SelectItem value="Pendente">Pendente</SelectItem>
-                    <SelectItem value="Bloqueado">Bloqueado</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="flex space-x-2">
-                <Button type="submit" className="flex-1">
-                  {editingUser ? "Atualizar" : "Criar"}
-                </Button>
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={() => setIsDialogOpen(false)}
-                >
-                  Cancelar
-                </Button>
-              </div>
-            </form>
-          </DialogContent>
+          <UsuarioForm
+            isOpen={isDialogOpen}
+            onOpenChange={setIsDialogOpen}
+            editingUser={editingUser}
+            formData={formData}
+            onFormDataChange={setFormData}
+            onSubmit={handleSubmit}
+          />
         </Dialog>
       </div>
 
-      {/* Filtros */}
-      <div className="flex space-x-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 w-4 h-4" />
-          <Input
-            placeholder="Buscar por nome ou email..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-        <Select value={filterPlano} onValueChange={setFilterPlano}>
-          <SelectTrigger className="w-48">
-            <Filter className="w-4 h-4 mr-2" />
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="todos">Todos os Planos</SelectItem>
-            <SelectItem value="gratuito">Gratuito</SelectItem>
-            <SelectItem value="Básico">Básico</SelectItem>
-            <SelectItem value="Premium">Premium</SelectItem>
-            <SelectItem value="Corporativo">Corporativo</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      <UsuarioFilters
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        filterPlano={filterPlano}
+        onFilterChange={setFilterPlano}
+      />
 
-      {/* Tabela de Usuários */}
-      <Card>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nome</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Plano</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Data Registro</TableHead>
-                <TableHead>Último Acesso</TableHead>
-                <TableHead>Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {usuariosFiltrados.map((usuario) => (
-                <TableRow key={usuario.id}>
-                  <TableCell className="font-medium">{usuario.nome}</TableCell>
-                  <TableCell>{usuario.email}</TableCell>
-                  <TableCell>
-                    <Badge variant={usuario.plano === "Premium" ? "default" : "secondary"}>
-                      {usuario.plano}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={usuario.status === "Ativo" ? "default" : "secondary"}>
-                      {usuario.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    {new Date(usuario.dataRegistro).toLocaleDateString('pt-BR')}
-                  </TableCell>
-                  <TableCell>
-                    {new Date(usuario.ultimoAcesso).toLocaleDateString('pt-BR')}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex space-x-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleEdit(usuario)}
-                      >
-                        <Pencil className="w-3 h-3" />
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => handleDelete(usuario.id)}
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+      <UsuarioTable
+        usuarios={usuariosFiltrados}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
     </div>
   );
 };
