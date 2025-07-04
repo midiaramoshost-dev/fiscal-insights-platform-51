@@ -23,8 +23,8 @@ export const AdminAuthProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const adminLogin = (username: string, password: string): boolean => {
-    // Credenciais definidas conforme solicitado
-    if (username === 'ramos' && password === 'R@mos 1qazxsw2') {
+    // Credenciais atualizadas conforme solicitado
+    if (username === 'ramos' && password === '1qazxsw2') {
       setIsAdminAuthenticated(true);
       localStorage.setItem('admin-authenticated', 'true');
       return true;
