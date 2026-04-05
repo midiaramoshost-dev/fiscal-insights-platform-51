@@ -1,17 +1,17 @@
 
-import { Calculator, Download, BookOpen, TrendingUp, DollarSign, Percent } from "lucide-react";
+import { Calculator, Download, BookOpen, TrendingUp, DollarSign, Percent, RefreshCw, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { useIndices } from "@/contexts/IndicesContext";
 import { useState } from "react";
+import { useEconomicIndices } from "@/hooks/useLiveData";
 import AssinaturaPremiumForm from "./forms/AssinaturaPremiumForm";
 import { Link } from "react-router-dom";
 
 const RightSidebar = () => {
-  const { indices } = useIndices();
   const [premiumFormOpen, setPremiumFormOpen] = useState(false);
+  const { indices, loading: indicesLoading, refresh: refreshIndices } = useEconomicIndices();
 
   const handleProtectedClick = () => {
     setPremiumFormOpen(true);
@@ -122,9 +122,27 @@ const RightSidebar = () => {
             <CardTitle className="flex items-center space-x-2 text-slate-800">
               <TrendingUp className="w-5 h-5" />
               <span>Índices Econômicos</span>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="ml-auto p-1 h-6 w-6"
+                onClick={() => {
+                  localStorage.removeItem('live-data-indices');
+                  refreshIndices();
+                }}
+                disabled={indicesLoading}
+              >
+                {indicesLoading ? <Loader2 className="w-3 h-3 animate-spin" /> : <RefreshCw className="w-3 h-3" />}
+              </Button>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
+            {indicesLoading && indices.length === 0 && (
+              <div className="text-center py-4 text-slate-500">
+                <Loader2 className="w-5 h-5 animate-spin mx-auto mb-1" />
+                <span className="text-xs">Buscando dados do BCB...</span>
+              </div>
+            )}
             {indices.map((indice, index) => (
               <div key={index} className="flex items-center justify-between">
                 <div>
@@ -143,7 +161,8 @@ const RightSidebar = () => {
             ))}
             <div className="pt-2 border-t border-slate-200">
               <span className="text-xs text-slate-600">
-                Atualizado em: {indices.length > 0 ? new Date(indices[0].ultimaAtualizacao).toLocaleDateString('pt-BR') : 'N/A'}
+                Fonte: Banco Central do Brasil
+                {indices.length > 0 && ` • ${indices[0].ultimaAtualizacao}`}
               </span>
             </div>
           </CardContent>
