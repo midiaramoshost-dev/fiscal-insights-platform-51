@@ -23,13 +23,15 @@ export const useAdmin = () => {
   const usuarios = useUsuarios();
   const cursosVendas = useCursosVendas();
   const configuracoes = useConfiguracoes();
+  const calendario = useCalendarioFiscal();
 
   return {
     ...indices,
     ...conteudo,
     ...usuarios,
     ...cursosVendas,
-    ...configuracoes
+    ...configuracoes,
+    ...calendario
   };
 };
 
