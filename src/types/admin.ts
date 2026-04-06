@@ -106,3 +106,14 @@ export interface Matricula {
   dados_matricula: any;
   created_at: string;
 }
+
+export interface EventoFiscal {
+  id: string;
+  dia: number;
+  mes: number | null; // null = todo mês
+  evento: string;
+  tipo: 'Federal' | 'Estadual' | 'Municipal' | 'Trabalhista';
+  descricao?: string;
+  recorrente: boolean;
+  ativo: boolean;
+}
