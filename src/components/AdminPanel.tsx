@@ -139,6 +139,11 @@ const AdminPanelContent = () => {
             <IndicesEconomicosManager />
           </TabsContent>
 
+          {/* Calendário Fiscal */}
+          <TabsContent value="calendario">
+            <CalendarioFiscalManager />
+          </TabsContent>
+
           {/* Gestão de Cursos */}
           <TabsContent value="cursos">
             <CursosManager />
