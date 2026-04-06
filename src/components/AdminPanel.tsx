@@ -98,6 +98,10 @@ const AdminPanelContent = () => {
               <TrendingUp className="w-4 h-4" />
               <span>Índices</span>
             </TabsTrigger>
+            <TabsTrigger value="calendario" className="flex items-center space-x-2">
+              <Calendar className="w-4 h-4" />
+              <span>Calendário</span>
+            </TabsTrigger>
             <TabsTrigger value="cursos" className="flex items-center space-x-2">
               <Book className="w-4 h-4" />
               <span>Cursos</span>
