@@ -51,6 +51,7 @@ const App = () => (
                 <Route path="/contato" element={<Contato />} />
                 <Route path="/newsletter" element={<Newsletter />} />
                 <Route path="/suporte" element={<Suporte />} />
+                <Route path="/icms" element={<ICMSEstados />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
