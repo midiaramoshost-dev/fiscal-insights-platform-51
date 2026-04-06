@@ -53,17 +53,19 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <IndicesProvider>
-      <ConteudoProvider>
-        <UsuariosProvider>
-          <CursosVendasProvider>
-            <ConfiguracoesProvider>
-              <AdminContext.Provider value={{}}>
-                {children}
-              </AdminContext.Provider>
-            </ConfiguracoesProvider>
-          </CursosVendasProvider>
-        </UsuariosProvider>
-      </ConteudoProvider>
+      <CalendarioFiscalProvider>
+        <ConteudoProvider>
+          <UsuariosProvider>
+            <CursosVendasProvider>
+              <ConfiguracoesProvider>
+                <AdminContext.Provider value={{}}>
+                  {children}
+                </AdminContext.Provider>
+              </ConfiguracoesProvider>
+            </CursosVendasProvider>
+          </UsuariosProvider>
+        </ConteudoProvider>
+      </CalendarioFiscalProvider>
     </IndicesProvider>
   );
 };
