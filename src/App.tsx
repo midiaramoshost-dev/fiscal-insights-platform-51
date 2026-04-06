@@ -23,6 +23,7 @@ import InCompany from "./pages/InCompany";
 import Contato from "./pages/Contato";
 import Newsletter from "./pages/Newsletter";
 import Suporte from "./pages/Suporte";
+import ICMSEstados from "./pages/ICMSEstados";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ const App = () => (
                 <Route path="/contato" element={<Contato />} />
                 <Route path="/newsletter" element={<Newsletter />} />
                 <Route path="/suporte" element={<Suporte />} />
+                <Route path="/icms" element={<ICMSEstados />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
