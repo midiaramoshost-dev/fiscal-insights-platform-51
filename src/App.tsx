@@ -23,6 +23,7 @@ import InCompany from "./pages/InCompany";
 import Contato from "./pages/Contato";
 import Newsletter from "./pages/Newsletter";
 import Suporte from "./pages/Suporte";
+import ICMSEstados from "./pages/ICMSEstados";
 
 const queryClient = new QueryClient();
 
