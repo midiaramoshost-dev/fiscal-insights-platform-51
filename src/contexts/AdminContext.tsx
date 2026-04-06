@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect, ReactNode } from 'react';
 import { IndicesProvider, useIndices } from './IndicesContext';
 import { ConteudoProvider, useConteudo } from './ConteudoContext';
+import { CalendarioFiscalProvider, useCalendarioFiscal } from './CalendarioFiscalContext';
 import { UsuariosProvider, useUsuarios } from './UsuariosContext';
 import { CursosVendasProvider, useCursosVendas } from './CursosVendasContext';
 import { ConfiguracoesProvider, useConfiguracoes } from './ConfiguracoesContext';
