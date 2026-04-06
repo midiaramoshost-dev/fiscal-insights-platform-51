@@ -15,6 +15,7 @@ import CursosManager from "./admin/CursosManager";
 import VendasManager from "./admin/VendasManager";
 import ConfiguracoesManager from "./admin/ConfiguracoesManager";
 import ApiConfigManager from "./admin/ApiConfigManager";
+import CalendarioFiscalManager from "./admin/CalendarioFiscalManager";
 
 const AdminPanelContent = () => {
   const { artigos, indices, linksExternos, usuarios, cursos, vendas } = useAdmin();
@@ -84,7 +85,7 @@ const AdminPanelContent = () => {
 
         {/* Main Content */}
         <Tabs defaultValue="usuarios" className="w-full">
-          <TabsList className="grid w-full grid-cols-8 mb-6">
+          <TabsList className="grid w-full grid-cols-9 mb-6">
             <TabsTrigger value="usuarios" className="flex items-center space-x-2">
               <Users className="w-4 h-4" />
               <span>Usuários</span>
@@ -96,6 +97,10 @@ const AdminPanelContent = () => {
             <TabsTrigger value="indices" className="flex items-center space-x-2">
               <TrendingUp className="w-4 h-4" />
               <span>Índices</span>
+            </TabsTrigger>
+            <TabsTrigger value="calendario" className="flex items-center space-x-2">
+              <Calendar className="w-4 h-4" />
+              <span>Calendário</span>
             </TabsTrigger>
             <TabsTrigger value="cursos" className="flex items-center space-x-2">
               <Book className="w-4 h-4" />
@@ -132,6 +137,11 @@ const AdminPanelContent = () => {
           {/* Gestão de Índices Econômicos */}
           <TabsContent value="indices">
             <IndicesEconomicosManager />
+          </TabsContent>
+
+          {/* Calendário Fiscal */}
+          <TabsContent value="calendario">
+            <CalendarioFiscalManager />
           </TabsContent>
 
           {/* Gestão de Cursos */}

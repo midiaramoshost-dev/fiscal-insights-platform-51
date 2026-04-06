@@ -1,24 +1,31 @@
-
-import { Calendar, ExternalLink, TrendingUp, FileText, Clock } from "lucide-react";
+import { Calendar, ExternalLink, TrendingUp, FileText, Clock, RefreshCw } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useState } from "react";
+import { useCalendarioFiscal } from "@/contexts/CalendarioFiscalContext";
 import AssinaturaPremiumForm from "./forms/AssinaturaPremiumForm";
 
 const LeftSidebar = () => {
   const [premiumFormOpen, setPremiumFormOpen] = useState(false);
+  const { proximosEventos } = useCalendarioFiscal();
 
   const handleProtectedClick = () => {
     setPremiumFormOpen(true);
   };
 
-  const calendarioFiscal = [
-    { data: "15/01", evento: "DARF - Pessoa Jurídica", tipo: "Federal" },
-    { data: "20/01", evento: "FGTS", tipo: "Trabalhista" },
-    { data: "25/01", evento: "Simples Nacional", tipo: "Federal" },
-    { data: "31/01", evento: "DEFIS", tipo: "Federal" }
-  ];
+  const mesAtual = new Date().getMonth() + 1;
+  const meses = ['', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+  const tipoCor = (tipo: string) => {
+    switch (tipo) {
+      case 'Federal': return 'border-blue-400';
+      case 'Estadual': return 'border-emerald-400';
+      case 'Municipal': return 'border-purple-400';
+      case 'Trabalhista': return 'border-orange-400';
+      default: return 'border-slate-400';
+    }
+  };
 
   const linksRapidos = [
     { nome: "Receita Federal", url: "https://www.gov.br/receitafederal", categoria: "Governo" },
@@ -27,30 +34,6 @@ const LeftSidebar = () => {
     { nome: "SPED", url: "https://www.gov.br/receitafederal/pt-br/assuntos/orientacao-tributaria/declaracoes-e-demonstrativos/sped", categoria: "SPED" },
     { nome: "Simples Nacional", url: "https://www8.receita.fazenda.gov.br/simplesnacional", categoria: "Governo" },
     { nome: "CFC - Conselho Federal", url: "https://cfc.org.br", categoria: "Conselho" }
-  ];
-
-  const legislacoesRecentes = [
-    {
-      titulo: "Lei nº 14.020/2024",
-      descricao: "Nova regulamentação do eSocial",
-      data: "10/01/2024",
-      tipo: "Lei",
-      premium: true
-    },
-    {
-      titulo: "IN RFB nº 2.201/2024",
-      descricao: "Alterações no SPED Fiscal",
-      data: "08/01/2024",
-      tipo: "IN",
-      premium: false
-    },
-    {
-      titulo: "Portaria ME nº 15/2024",
-      descricao: "Novos códigos de receita",
-      data: "05/01/2024",
-      tipo: "Portaria",
-      premium: true
-    }
   ];
 
   return (
@@ -63,22 +46,29 @@ const LeftSidebar = () => {
               <Calendar className="w-5 h-5" />
               <span>Calendário Fiscal</span>
             </CardTitle>
+            <p className="text-xs text-slate-500">{meses[mesAtual]} - Próximos vencimentos</p>
           </CardHeader>
           <CardContent className="space-y-3">
-            {calendarioFiscal.map((item, index) => (
-              <div key={index} className="flex items-center justify-between border-l-4 border-blue-400 pl-3 py-2">
-                <div>
-                  <span className="font-medium text-slate-800">{item.data}</span>
-                  <p className="text-sm text-slate-600">{item.evento}</p>
-                  <Badge variant="secondary" className="text-xs mt-1">
-                    {item.tipo}
-                  </Badge>
+            {proximosEventos.length > 0 ? (
+              proximosEventos.map((item) => (
+                <div key={item.id} className={`flex items-center justify-between border-l-4 ${tipoCor(item.tipo)} pl-3 py-2`}>
+                  <div>
+                    <span className="font-medium text-slate-800">
+                      {String(item.dia).padStart(2, '0')}/{String(mesAtual).padStart(2, '0')}
+                    </span>
+                    <p className="text-sm text-slate-600">{item.evento}</p>
+                    <Badge variant="secondary" className="text-xs mt-1">
+                      {item.tipo}
+                    </Badge>
+                  </div>
                 </div>
-              </div>
-            ))}
-            <Button 
-              variant="outline" 
-              size="sm" 
+              ))
+            ) : (
+              <p className="text-sm text-slate-500 text-center py-2">Nenhum vencimento próximo neste mês</p>
+            )}
+            <Button
+              variant="outline"
+              size="sm"
               className="w-full"
               onClick={handleProtectedClick}
             >
@@ -97,10 +87,10 @@ const LeftSidebar = () => {
           </CardHeader>
           <CardContent className="space-y-2">
             {linksRapidos.map((link, index) => (
-              <Button 
+              <Button
                 key={index}
-                variant="ghost" 
-                size="sm" 
+                variant="ghost"
+                size="sm"
                 className="w-full justify-start hover:bg-blue-50 hover:text-blue-700"
                 asChild
               >
@@ -110,52 +100,6 @@ const LeftSidebar = () => {
                 </a>
               </Button>
             ))}
-          </CardContent>
-        </Card>
-
-        {/* Legislações Recentes */}
-        <Card>
-          <CardHeader className="pb-3">
-            <CardTitle className="flex items-center space-x-2 text-slate-800">
-              <FileText className="w-5 h-5" />
-              <span>Legislações Recentes</span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {legislacoesRecentes.map((leg, index) => (
-              <div key={index} className="border border-slate-200 rounded-lg p-3 hover:bg-slate-50 transition-colors cursor-pointer"
-                   onClick={() => leg.premium && handleProtectedClick()}>
-                <div className="flex items-start justify-between mb-2">
-                  <h4 className="font-medium text-sm text-slate-800">{leg.titulo}</h4>
-                  {leg.premium && (
-                    <Badge className="text-xs bg-gradient-to-r from-yellow-400 to-orange-400 text-white">
-                      Premium
-                    </Badge>
-                  )}
-                </div>
-                <p className="text-xs text-slate-600 mb-2">{leg.descricao}</p>
-                <div className="flex items-center justify-between text-xs text-slate-500">
-                  <div className="flex items-center">
-                    <Clock className="w-3 h-3 mr-1" />
-                    {leg.data}
-                  </div>
-                  <Badge variant="outline" className="text-xs">{leg.tipo}</Badge>
-                </div>
-                {leg.premium && (
-                  <Button size="sm" className="w-full mt-2 h-6 text-xs" onClick={handleProtectedClick}>
-                    Ler Completo 👑
-                  </Button>
-                )}
-              </div>
-            ))}
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="w-full"
-              onClick={handleProtectedClick}
-            >
-              Legislações Recentes 👑
-            </Button>
           </CardContent>
         </Card>
 

@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect, ReactNode } from 'react';
 import { IndicesProvider, useIndices } from './IndicesContext';
 import { ConteudoProvider, useConteudo } from './ConteudoContext';
+import { CalendarioFiscalProvider, useCalendarioFiscal } from './CalendarioFiscalContext';
 import { UsuariosProvider, useUsuarios } from './UsuariosContext';
 import { CursosVendasProvider, useCursosVendas } from './CursosVendasContext';
 import { ConfiguracoesProvider, useConfiguracoes } from './ConfiguracoesContext';
@@ -22,13 +23,15 @@ export const useAdmin = () => {
   const usuarios = useUsuarios();
   const cursosVendas = useCursosVendas();
   const configuracoes = useConfiguracoes();
+  const calendario = useCalendarioFiscal();
 
   return {
     ...indices,
     ...conteudo,
     ...usuarios,
     ...cursosVendas,
-    ...configuracoes
+    ...configuracoes,
+    ...calendario
   };
 };
 
@@ -50,17 +53,19 @@ export const AdminProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <IndicesProvider>
-      <ConteudoProvider>
-        <UsuariosProvider>
-          <CursosVendasProvider>
-            <ConfiguracoesProvider>
-              <AdminContext.Provider value={{}}>
-                {children}
-              </AdminContext.Provider>
-            </ConfiguracoesProvider>
-          </CursosVendasProvider>
-        </UsuariosProvider>
-      </ConteudoProvider>
+      <CalendarioFiscalProvider>
+        <ConteudoProvider>
+          <UsuariosProvider>
+            <CursosVendasProvider>
+              <ConfiguracoesProvider>
+                <AdminContext.Provider value={{}}>
+                  {children}
+                </AdminContext.Provider>
+              </ConfiguracoesProvider>
+            </CursosVendasProvider>
+          </UsuariosProvider>
+        </ConteudoProvider>
+      </CalendarioFiscalProvider>
     </IndicesProvider>
   );
 };
