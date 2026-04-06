@@ -15,6 +15,7 @@ import CursosManager from "./admin/CursosManager";
 import VendasManager from "./admin/VendasManager";
 import ConfiguracoesManager from "./admin/ConfiguracoesManager";
 import ApiConfigManager from "./admin/ApiConfigManager";
+import CalendarioFiscalManager from "./admin/CalendarioFiscalManager";
 
 const AdminPanelContent = () => {
   const { artigos, indices, linksExternos, usuarios, cursos, vendas } = useAdmin();
