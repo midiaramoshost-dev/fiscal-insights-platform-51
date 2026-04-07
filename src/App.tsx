@@ -10,8 +10,6 @@ import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AdminPanel from "./components/AdminPanel";
-import AuthPage from "./components/auth/AuthPage";
-import ProtectedRoute from "./components/ProtectedRoute";
 import QuemSomos from "./pages/QuemSomos";
 import Softwares from "./pages/Softwares";
 import Consultoria from "./pages/Consultoria";
@@ -38,7 +36,7 @@ const App = () => (
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Index />} />
-                <Route path="/auth" element={<AuthPage />} />
+                
                 <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/quem-somos" element={<QuemSomos />} />
                 <Route path="/softwares" element={<Softwares />} />
