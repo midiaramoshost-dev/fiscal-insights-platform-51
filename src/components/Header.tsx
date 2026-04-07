@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Phone, Mail, User, Menu } from "lucide-react";
 import { useState } from "react";
-import UserMenu from "./UserMenu";
+
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -28,7 +28,7 @@ const Header = () => {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <UserMenu />
+            <span className="text-slate-300 text-xs">Acesso livre a todo conteúdo</span>
           </div>
         </div>
       </div>

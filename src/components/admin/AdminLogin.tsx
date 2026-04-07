@@ -52,7 +52,7 @@ const AdminLogin = () => {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="pl-10"
-                  placeholder="Digite seu usuário"
+                  placeholder="Digite seu usuário (não é email)"
                   required
                 />
               </div>
