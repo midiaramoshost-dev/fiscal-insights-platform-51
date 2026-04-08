@@ -22,6 +22,7 @@ import Contato from "./pages/Contato";
 import Newsletter from "./pages/Newsletter";
 import Suporte from "./pages/Suporte";
 import ICMSEstados from "./pages/ICMSEstados";
+import CLTComentada from "./pages/CLTComentada";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ const App = () => (
                 <Route path="/newsletter" element={<Newsletter />} />
                 <Route path="/suporte" element={<Suporte />} />
                 <Route path="/icms" element={<ICMSEstados />} />
+                <Route path="/clt-comentada" element={<CLTComentada />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
