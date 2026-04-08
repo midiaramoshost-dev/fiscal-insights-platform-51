@@ -100,6 +100,9 @@ const Header = () => {
             <Link to="/suporte" className="text-slate-700 hover:text-blue-600 transition-colors">
               Suporte
             </Link>
+            <Link to="/clt-comentada" className="text-slate-700 hover:text-blue-600 transition-colors font-semibold">
+              CLT Comentada
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
