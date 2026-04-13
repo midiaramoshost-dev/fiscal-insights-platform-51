@@ -1,3 +1,5 @@
+name: Deploy Lovable via FTP na plushost
+
 on:
   push:
     branches: ["main"]
@@ -55,4 +57,3 @@ jobs:
             **/.git*/**
             **/.github/**
             **/node_modules/**
-
