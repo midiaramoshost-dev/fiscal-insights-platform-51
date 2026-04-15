@@ -1,23 +1,45 @@
+# Dependências
 node_modules
 npm-debug.log
+yarn-error.log
+
+# Git
 .git
 .gitignore
-README.md
+
+# Arquivos de ambiente
 .env
 .env.local
 .env.production
+.env.*
+
+# Build outputs
 dist
 build
+
+# Arquivos de sistema
 .DS_Store
-*.log
-coverage
-.nyc_output
-.dockerignore
-Dockerfile
-docker-compose.yml
-nginx.conf
-.github
+Thumbs.db
+
+# IDEs
 .vscode
 .idea
+*.swp
+*.swo
+
+# Testes
+coverage
+.nyc_output
+__tests__
+*.test.ts
+*.spec.ts
+
+# Docs
 *.md
 !README.md
+
+# GitHub
+.github
+
+# Lock files opcionais
+# bun.lockb
