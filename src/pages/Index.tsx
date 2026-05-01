@@ -5,10 +5,17 @@ import SearchSection from "@/components/SearchSection";
 import ContentFeeds from "@/components/ContentFeeds";
 import LeftSidebar from "@/components/LeftSidebar";
 import RightSidebar from "@/components/RightSidebar";
+import Footer from "@/components/Footer";
+import { Helmet } from "react-helmet-async";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-emerald-50">
+      <Helmet>
+        <title>Conecta Fisco - Plataforma Fiscal, Tributária e Trabalhista</title>
+        <meta name="description" content="Legislação atualizada, CLT comentada, ICMS por estado, calculadoras e cursos para contadores e empresas." />
+        <link rel="canonical" href="https://fiscal-insights-platform-51.lovable.app/" />
+      </Helmet>
       <Header />
       <SubHeader />
       
