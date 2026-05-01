@@ -23,6 +23,10 @@ import Newsletter from "./pages/Newsletter";
 import Suporte from "./pages/Suporte";
 import ICMSEstados from "./pages/ICMSEstados";
 import CLTComentada from "./pages/CLTComentada";
+import PoliticaPrivacidade from "./pages/PoliticaPrivacidade";
+import TermosUso from "./pages/TermosUso";
+import PoliticaCookies from "./pages/PoliticaCookies";
+import SobreAnuncios from "./pages/SobreAnuncios";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +56,10 @@ const App = () => (
                 <Route path="/suporte" element={<Suporte />} />
                 <Route path="/icms" element={<ICMSEstados />} />
                 <Route path="/clt-comentada" element={<CLTComentada />} />
+                <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
+                <Route path="/termos-uso" element={<TermosUso />} />
+                <Route path="/politica-cookies" element={<PoliticaCookies />} />
+                <Route path="/sobre-anuncios" element={<SobreAnuncios />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </BrowserRouter>
