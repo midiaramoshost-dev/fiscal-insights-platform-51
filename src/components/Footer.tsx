@@ -51,7 +51,7 @@ const Footer = () => {
 
         <div className="border-t border-slate-700 mt-8 pt-6 text-center text-sm text-slate-400">
           <p>© {new Date().getFullYear()} Conecta Fisco. Todos os direitos reservados.</p>
-          <p className="mt-1 text-xs">CNPJ: XX.XXX.XXX/0001-XX | Conteúdo educacional - não substitui consultoria profissional.</p>
+          <p className="mt-1 text-xs">CNPJ: 14.752.276/0001-30 | Conteúdo educacional - não substitui consultoria profissional.</p>
         </div>
       </div>
     </footer>
