@@ -1,0 +1,3 @@
+# ads.txt - Conecta Fisco
+# Substitua o pub-XXXXXXXXXXXXXXXX pelo seu Publisher ID do Google AdSense
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
