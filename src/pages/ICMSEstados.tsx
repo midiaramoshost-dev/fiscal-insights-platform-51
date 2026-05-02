@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Search, MapPin, FileText, Info } from "lucide-react";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Helmet } from "react-helmet-async";
 
 interface ICMSEstado {
   uf: string;
@@ -83,8 +85,13 @@ const ICMSEstados = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <Helmet>
+        <title>ICMS por Estado 2026 | Conecta Fisco</title>
+        <meta name="description" content="Tabela completa de ICMS dos 26 estados e Distrito Federal, com alíquotas internas, interestaduais, FECOP, DIFAL e base legal." />
+        <link rel="canonical" href="https://fiscal-insights-platform-51.lovable.app/icms" />
+      </Helmet>
       <Header />
-      <div className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent mb-4">
@@ -219,7 +226,8 @@ const ICMSEstados = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 };
