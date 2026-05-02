@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Search, BookOpen, Scale, Lightbulb, AlertTriangle, CheckCircle, Info } from "lucide-react";
-import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 
 interface Artigo {
@@ -622,7 +621,6 @@ const CLTComentada = () => {
           </Card>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };
