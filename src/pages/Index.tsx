@@ -5,7 +5,6 @@ import SearchSection from "@/components/SearchSection";
 import ContentFeeds from "@/components/ContentFeeds";
 import LeftSidebar from "@/components/LeftSidebar";
 import RightSidebar from "@/components/RightSidebar";
-import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 
 const Index = () => {
@@ -39,7 +38,6 @@ const Index = () => {
           </div>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };
