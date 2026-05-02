@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Search, MapPin, FileText, Info } from "lucide-react";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Helmet } from "react-helmet-async";
 
 interface ICMSEstado {
@@ -227,7 +226,6 @@ const ICMSEstados = () => {
           </Card>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };
