@@ -94,14 +94,17 @@ const Header = () => {
             <Link to="/contato" className="text-slate-700 hover:text-blue-600 transition-colors">
               Contato
             </Link>
+            <Link to="/clt-comentada" className="text-slate-700 hover:text-blue-600 transition-colors font-semibold">
+              CLT Comentada
+            </Link>
+            <Link to="/icms" className="text-slate-700 hover:text-blue-600 transition-colors font-semibold">
+              ICMS
+            </Link>
             <Link to="/newsletter" className="text-slate-700 hover:text-blue-600 transition-colors">
               Newsletter
             </Link>
             <Link to="/suporte" className="text-slate-700 hover:text-blue-600 transition-colors">
               Suporte
-            </Link>
-            <Link to="/clt-comentada" className="text-slate-700 hover:text-blue-600 transition-colors font-semibold">
-              CLT Comentada
             </Link>
           </nav>
 
@@ -186,6 +189,20 @@ const Header = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Suporte
+            </Link>
+            <Link 
+              to="/clt-comentada" 
+              className="block py-2 text-slate-700 hover:text-blue-600 transition-colors font-semibold"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              CLT Comentada
+            </Link>
+            <Link 
+              to="/icms" 
+              className="block py-2 text-slate-700 hover:text-blue-600 transition-colors font-semibold"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              ICMS por Estado
             </Link>
           </nav>
         )}
