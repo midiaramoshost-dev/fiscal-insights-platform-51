@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Search, BookOpen, Scale, Lightbulb, AlertTriangle, CheckCircle, Info } from "lucide-react";
+import Footer from "@/components/Footer";
+import { Helmet } from "react-helmet-async";
 
 interface Artigo {
   numero: string;
@@ -468,9 +470,14 @@ const CLTComentada = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      <Helmet>
+        <title>CLT Comentada 2026 | Conecta Fisco</title>
+        <meta name="description" content="CLT comentada, analisada, interpretada e orientadora, com busca por artigos, comentários práticos e jurisprudência trabalhista." />
+        <link rel="canonical" href="https://fiscal-insights-platform-51.lovable.app/clt-comentada" />
+      </Helmet>
       <Header />
 
-      <div className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-8">
         <div className="max-w-5xl mx-auto">
           {/* Cabeçalho */}
           <div className="text-center mb-10">
@@ -614,7 +621,8 @@ const CLTComentada = () => {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 };
