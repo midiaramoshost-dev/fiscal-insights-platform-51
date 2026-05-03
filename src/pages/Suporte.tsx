@@ -32,8 +32,8 @@ const Suporte = () => {
 
   const faqItems = [
     {
-      pergunta: "Como posso cancelar minha assinatura?",
-      resposta: "Você pode cancelar sua assinatura a qualquer momento através do painel do usuário ou entrando em contato conosco."
+      pergunta: "O conteúdo do site é gratuito?",
+      resposta: "Sim. O acesso às páginas públicas, ferramentas, CLT Comentada e tabela de ICMS é livre e não exige assinatura."
     },
     {
       pergunta: "Os cursos possuem certificado?",
