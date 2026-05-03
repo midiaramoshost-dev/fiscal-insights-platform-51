@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ChevronLeft, ChevronRight, Play, BookOpen, TrendingUp } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -15,7 +16,8 @@ const Hero = () => {
       description: "Conheça as principais mudanças na legislação do ICMS de São Paulo que entram em vigor este ano.",
       image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       type: "Legislação",
-      color: "bg-blue-600"
+      color: "bg-blue-600",
+      link: "/icms"
     },
     {
       id: 2,
@@ -24,16 +26,18 @@ const Hero = () => {
       description: "Aprenda a usar o eSocial de forma completa com nosso curso prático e atualizado.",
       image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       type: "Curso",
-      color: "bg-emerald-600"
+      color: "bg-emerald-600",
+      link: "/cursos/ead"
     },
     {
       id: 3,
       title: "Simulador de Regime Tributário",
-      subtitle: "Ferramenta gratuita para assinantes",
+      subtitle: "Ferramenta gratuita de consulta",
       description: "Compare diferentes regimes tributários e encontre o mais vantajoso para sua empresa.",
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
       type: "Ferramenta",
-      color: "bg-purple-600"
+      color: "bg-purple-600",
+      link: "/ferramentas"
     }
   ];
 
@@ -96,14 +100,17 @@ const Hero = () => {
                       <Button 
                         size="lg"
                         className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700"
+                        asChild
                       >
-                        Saiba Mais
+                        <Link to={slide.link}>Saiba Mais</Link>
                       </Button>
                       
                       {slide.type === "Curso" && (
-                        <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-slate-900">
-                          <Play className="w-4 h-4 mr-2" />
-                          Assistir Preview
+                        <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-slate-900" asChild>
+                          <Link to="/cursos/ead">
+                            <Play className="w-4 h-4 mr-2" />
+                            Ver Curso
+                          </Link>
                         </Button>
                       )}
                     </div>
