@@ -4,18 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useState } from "react";
-import AssinaturaPremiumForm from "./forms/AssinaturaPremiumForm";
+import { Link } from "react-router-dom";
 
 const SearchSection = () => {
-  const [premiumFormOpen, setPremiumFormOpen] = useState(false);
-
-  const handleProtectedSearch = () => {
-    setPremiumFormOpen(true);
-  };
-
   return (
-    <>
       <Card className="bg-gradient-to-br from-blue-50 to-emerald-50 border-blue-200">
         <CardHeader>
           <CardTitle className="flex items-center space-x-2 text-slate-800">
@@ -96,10 +88,12 @@ const SearchSection = () => {
               />
               <Button 
                 className="bg-gradient-to-r from-blue-600 to-emerald-600 hover:from-blue-700 hover:to-emerald-700"
-                onClick={handleProtectedSearch}
+                asChild
               >
-                <Search className="w-4 h-4 mr-2" />
-                Buscar 👑
+                <Link to="/clt-comentada">
+                  <Search className="w-4 h-4 mr-2" />
+                  Buscar
+                </Link>
               </Button>
             </div>
           </div>
@@ -108,23 +102,19 @@ const SearchSection = () => {
             <Button 
               variant="outline" 
               size="sm"
-              onClick={handleProtectedSearch}
+              asChild
             >
-              <Filter className="w-4 h-4 mr-2" />
-              Filtros Avançados 👑
+              <Link to="/icms">
+                <Filter className="w-4 h-4 mr-2" />
+                Filtros Avançados
+              </Link>
             </Button>
             <span className="text-sm text-slate-600">
-              Mais de 50.000 documentos catalogados
+              Conteúdo fiscal e trabalhista de acesso livre
             </span>
           </div>
         </CardContent>
       </Card>
-
-      <AssinaturaPremiumForm
-        isOpen={premiumFormOpen}
-        onClose={() => setPremiumFormOpen(false)}
-      />
-    </>
   );
 };
 
