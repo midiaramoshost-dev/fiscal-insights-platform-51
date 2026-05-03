@@ -7,74 +7,63 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
-import AssinaturaPremiumForm from "./forms/AssinaturaPremiumForm";
+import { Link } from "react-router-dom";
 
 const SubHeader = () => {
-  const [premiumFormOpen, setPremiumFormOpen] = useState(false);
-  const { user } = useAuth();
-  const navigate = useNavigate();
-
-  const handleMenuClick = (requiresAuth: boolean, requiresPremium: boolean) => {
-    if (requiresAuth && !user) {
-      navigate('/auth');
-      return;
-    }
-    
-    if (requiresPremium) {
-      setPremiumFormOpen(true);
-    }
-  };
-
   const menuItems = [
     {
       title: "SIMPLES",
-      items: ["Optantes", "Desenquadramento", "Sublimites", "Anexos", "Cálculo"]
+      items: ["Optantes", "Desenquadramento", "Sublimites", "Anexos", "Cálculo"],
+      link: "/ferramentas"
     },
     {
       title: "IR",
-      items: ["Pessoa Física", "Pessoa Jurídica", "Lucro Real", "Lucro Presumido", "Declarações"]
+      items: ["Pessoa Física", "Pessoa Jurídica", "Lucro Real", "Lucro Presumido", "Declarações"],
+      link: "/ferramentas"
     },
     {
       title: "PIS/COFINS",
-      items: ["Cumulativo", "Não Cumulativo", "Substituição Tributária", "Créditos", "Retenções"]
+      items: ["Cumulativo", "Não Cumulativo", "Substituição Tributária", "Créditos", "Retenções"],
+      link: "/ferramentas"
     },
     {
       title: "ICMS/ISS/IPI",
-      items: ["ICMS Estadual", "ISS Municipal", "IPI Federal", "Substituição Tributária", "Benefícios"]
+      items: ["ICMS Estadual", "ISS Municipal", "IPI Federal", "Substituição Tributária", "Benefícios"],
+      link: "/icms"
     },
     {
       title: "Trabalho e Previdência",
-      items: ["eSocial", "FGTS", "Contribuições", "Folha de Pagamento", "Benefícios"]
+      items: ["CLT Comentada", "eSocial", "FGTS", "Contribuições", "Folha de Pagamento", "Benefícios"],
+      link: "/clt-comentada"
     },
     {
       title: "Comercial",
-      items: ["Notas Fiscais", "Contratos", "Documentos", "Importação/Exportação"]
+      items: ["Notas Fiscais", "Contratos", "Documentos", "Importação/Exportação"],
+      link: "/consultoria"
     },
     {
       title: "SPED",
-      items: ["ECD", "ECF", "EFD-Contribuições", "EFD-ICMS/IPI", "Reinf"]
+      items: ["ECD", "ECF", "EFD-Contribuições", "EFD-ICMS/IPI", "Reinf"],
+      link: "/ferramentas"
     },
     {
       title: "Declarações",
-      items: ["DARF", "GFIP", "DIRF", "DME", "Outras Declarações"]
+      items: ["DARF", "GFIP", "DIRF", "DME", "Outras Declarações"],
+      link: "/ferramentas"
     },
     {
       title: "Contabilidade",
-      items: ["Balanço", "DRE", "Plano de Contas", "Conciliações", "Auditoria"]
+      items: ["Balanço", "DRE", "Plano de Contas", "Conciliações", "Auditoria"],
+      link: "/consultoria"
     },
     {
       title: "Reforma da Previdência",
-      items: ["Novas Regras", "Transição", "Cálculos", "Impactos", "Orientações"]
+      items: ["Novas Regras", "Transição", "Cálculos", "Impactos", "Orientações"],
+      link: "/clt-comentada"
     }
   ];
 
-  const menusComPremium = ["SIMPLES", "IR", "PIS/COFINS", "ICMS/ISS/IPI", "Trabalho e Previdência", "SPED", "Contabilidade", "Reforma da Previdência"];
-
   return (
-    <>
       <div className="bg-gradient-to-r from-slate-700 to-slate-800 border-b border-slate-600">
         <div className="container mx-auto px-4">
           <nav className="flex items-center space-x-1 overflow-x-auto py-3">
@@ -91,17 +80,13 @@ const SubHeader = () => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-56 bg-white shadow-lg border border-slate-200">
                   {menu.items.map((item, itemIndex) => (
-                    <DropdownMenuItem
+                    <DropdownMenuItem asChild
                       key={itemIndex}
                       className="hover:bg-blue-50 hover:text-blue-700 cursor-pointer"
-                      onClick={() => {
-                        handleMenuClick(true, menusComPremium.includes(menu.title));
-                      }}
                     >
-                      {item}
-                      {menusComPremium.includes(menu.title) && (
-                        <span className="ml-auto text-xs text-blue-600">👑</span>
-                      )}
+                      <Link to={menu.link} className="w-full">
+                        {item}
+                      </Link>
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>
@@ -110,12 +95,6 @@ const SubHeader = () => {
           </nav>
         </div>
       </div>
-
-      <AssinaturaPremiumForm
-        isOpen={premiumFormOpen}
-        onClose={() => setPremiumFormOpen(false)}
-      />
-    </>
   );
 };
 
