@@ -8,6 +8,7 @@ import { AdminProvider } from "@/contexts/AdminContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { AdminAuthProvider } from "@/contexts/AdminAuthContext";
 import Footer from "@/components/Footer";
+import CookieConsent from "@/components/CookieConsent";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AdminPanel from "./components/AdminPanel";
@@ -60,6 +61,7 @@ const AppRoutes = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!hideFooter && <Footer />}
+      <CookieConsent />
     </>
   );
 };

@@ -21,6 +21,36 @@
     <meta name="twitter:description" content="Plataforma completa de informações fiscais, tributárias e trabalhistas." />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
+    <!-- Google Consent Mode v2 (default denied until user consents - LGPD/GDPR) -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        functionality_storage: 'granted',
+        security_storage: 'granted',
+        wait_for_update: 500
+      });
+
+      // Apply stored consent (if any) before AdSense loads
+      try {
+        var stored = localStorage.getItem('cf_consent');
+        if (stored) {
+          var c = JSON.parse(stored);
+          gtag('consent', 'update', {
+            ad_storage: c.ads ? 'granted' : 'denied',
+            ad_user_data: c.ads ? 'granted' : 'denied',
+            ad_personalization: c.ads ? 'granted' : 'denied',
+            analytics_storage: c.analytics ? 'granted' : 'denied'
+          });
+        }
+      } catch(e) {}
+    </script>
+
     <!-- Google AdSense - Auto Ads -->
     <meta name="google-adsense-account" content="ca-pub-2147917938389486" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2147917938389486" crossorigin="anonymous"></script>
