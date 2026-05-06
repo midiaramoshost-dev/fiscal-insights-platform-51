@@ -29,6 +29,7 @@ import PoliticaPrivacidade from "./pages/PoliticaPrivacidade";
 import TermosUso from "./pages/TermosUso";
 import PoliticaCookies from "./pages/PoliticaCookies";
 import SobreAnuncios from "./pages/SobreAnuncios";
+import Topico from "./pages/Topico";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,7 @@ const AppRoutes = () => {
         <Route path="/termos-uso" element={<TermosUso />} />
         <Route path="/politica-cookies" element={<PoliticaCookies />} />
         <Route path="/sobre-anuncios" element={<SobreAnuncios />} />
+        <Route path="/topico/:slug" element={<Topico />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!hideFooter && <Footer />}
