@@ -13,16 +13,20 @@ const Topico = () => {
   const { slug } = useParams<{ slug: string }>();
   const topico = slug ? topicoBySlug(slug) : undefined;
 
+  useEffect(() => {
+    if (topico) {
+      document.title = `${topico.titulo} | Conecta Fisco`;
+      const meta = document.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute("content", topico.resumo);
+    }
+  }, [topico]);
+
   if (!topico) return <NotFound />;
 
   const relacionados = topicos.filter(t => t.categoria === topico.categoria && t.slug !== topico.slug).slice(0, 5);
 
   return (
     <div className="min-h-screen bg-slate-50">
-      <Helmet>
-        <title>{topico.titulo} | Conecta Fisco</title>
-        <meta name="description" content={topico.resumo} />
-      </Helmet>
       <Header />
       <SubHeader />
 
