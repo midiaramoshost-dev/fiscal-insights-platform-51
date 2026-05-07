@@ -24,6 +24,7 @@ import Contato from "./pages/Contato";
 import Newsletter from "./pages/Newsletter";
 import Suporte from "./pages/Suporte";
 import ICMSEstados from "./pages/ICMSEstados";
+import ICMSRegulamentos from "./pages/ICMSRegulamentos";
 import CLTComentada from "./pages/CLTComentada";
 import PoliticaPrivacidade from "./pages/PoliticaPrivacidade";
 import TermosUso from "./pages/TermosUso";
@@ -54,6 +55,7 @@ const AppRoutes = () => {
         <Route path="/newsletter" element={<Newsletter />} />
         <Route path="/suporte" element={<Suporte />} />
         <Route path="/icms" element={<ICMSEstados />} />
+        <Route path="/icms-regulamentos" element={<ICMSRegulamentos />} />
         <Route path="/clt-comentada" element={<CLTComentada />} />
         <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
         <Route path="/termos-uso" element={<TermosUso />} />
