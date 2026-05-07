@@ -100,6 +100,9 @@ const Header = () => {
             <Link to="/icms" className="text-slate-700 hover:text-blue-600 transition-colors font-semibold">
               ICMS
             </Link>
+            <Link to="/icms-regulamentos" className="text-slate-700 hover:text-blue-600 transition-colors font-semibold">
+              RICMS
+            </Link>
             <Link to="/newsletter" className="text-slate-700 hover:text-blue-600 transition-colors">
               Newsletter
             </Link>
