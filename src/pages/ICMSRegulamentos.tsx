@@ -5,11 +5,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, BookOpen, Scale, Lightbulb, AlertTriangle, CheckCircle2, ExternalLink, FileText, GraduationCap } from "lucide-react";
+import { Search, BookOpen, Scale, Lightbulb, AlertTriangle, CheckCircle2, ExternalLink, FileText, GraduationCap, SearchCode } from "lucide-react";
 import Header from "@/components/Header";
 import SubHeader from "@/components/SubHeader";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import { trechosRICMS } from "@/data/ricmsTrechos";
 
 interface RegulamentoEstado {
   uf: string;
