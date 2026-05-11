@@ -54,6 +54,8 @@ const regulamentos: RegulamentoEstado[] = [
 
 const ICMSRegulamentos = () => {
   const [busca, setBusca] = useState("");
+  const [buscaTrecho, setBuscaTrecho] = useState("");
+  const [filtroTipo, setFiltroTipo] = useState<"todos" | "artigo" | "inciso" | "anexo">("todos");
 
   const filtrados = useMemo(
     () =>
@@ -66,6 +68,22 @@ const ICMSRegulamentos = () => {
       ),
     [busca]
   );
+
+  const trechosFiltrados = useMemo(() => {
+    const termo = buscaTrecho.trim().toLowerCase();
+    return trechosRICMS.filter((t) => {
+      if (filtroTipo !== "todos" && t.tipo !== filtroTipo) return false;
+      if (!termo) return true;
+      return (
+        t.referencia.toLowerCase().includes(termo) ||
+        t.titulo.toLowerCase().includes(termo) ||
+        t.resumo.toLowerCase().includes(termo) ||
+        t.uf.toLowerCase().includes(termo) ||
+        t.estado.toLowerCase().includes(termo) ||
+        t.tags.some((tag) => tag.toLowerCase().includes(termo))
+      );
+    });
+  }, [buscaTrecho, filtroTipo]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
