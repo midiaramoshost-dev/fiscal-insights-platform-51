@@ -112,14 +112,113 @@ const ICMSRegulamentos = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="guia" className="w-full">
-          <TabsList className="grid grid-cols-2 md:grid-cols-5 w-full mb-6">
+        <Tabs defaultValue="busca" className="w-full">
+          <TabsList className="grid grid-cols-2 md:grid-cols-6 w-full mb-6">
+            <TabsTrigger value="busca"><SearchCode className="w-4 h-4 mr-1" />Buscar no RICMS</TabsTrigger>
             <TabsTrigger value="guia"><GraduationCap className="w-4 h-4 mr-1" />Guia Prático</TabsTrigger>
             <TabsTrigger value="estrutura"><BookOpen className="w-4 h-4 mr-1" />Estrutura</TabsTrigger>
             <TabsTrigger value="aplicacao"><Lightbulb className="w-4 h-4 mr-1" />Como Aplicar</TabsTrigger>
             <TabsTrigger value="estados"><Scale className="w-4 h-4 mr-1" />Por Estado</TabsTrigger>
             <TabsTrigger value="erros"><AlertTriangle className="w-4 h-4 mr-1" />Erros Comuns</TabsTrigger>
           </TabsList>
+
+          {/* BUSCA NO RICMS */}
+          <TabsContent value="busca" className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-slate-800">
+                  <SearchCode className="w-5 h-5 text-blue-600" />
+                  Busca por artigo, inciso e anexo
+                </CardTitle>
+                <p className="text-sm text-slate-600 mt-1">
+                  Pesquise por número (ex.: <em>art. 52</em>, <em>anexo IV</em>), por UF (ex.: <em>SP</em>),
+                  ou por palavra-chave (ex.: <em>DIFAL</em>, <em>crédito presumido</em>, <em>FECP</em>).
+                  O resultado traz um resumo do trecho e o link oficial do estado.
+                </p>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex flex-col md:flex-row gap-3">
+                  <div className="relative flex-1">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <Input
+                      placeholder="Buscar artigo, inciso, anexo, UF ou tema..."
+                      value={buscaTrecho}
+                      onChange={(e) => setBuscaTrecho(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                  <div className="flex gap-2 flex-wrap">
+                    {(["todos", "artigo", "inciso", "anexo"] as const).map((t) => (
+                      <Button
+                        key={t}
+                        size="sm"
+                        variant={filtroTipo === t ? "default" : "outline"}
+                        onClick={() => setFiltroTipo(t)}
+                        className="capitalize"
+                      >
+                        {t}
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+
+                <p className="text-xs text-slate-500">
+                  {trechosFiltrados.length} resultado(s) encontrado(s)
+                </p>
+
+                <div className="space-y-3">
+                  {trechosFiltrados.length === 0 && (
+                    <Card className="bg-slate-50">
+                      <CardContent className="p-6 text-center text-slate-500 text-sm">
+                        Nenhum trecho encontrado. Tente termos como "art. 52", "anexo IV", "DIFAL" ou a UF do estado.
+                      </CardContent>
+                    </Card>
+                  )}
+                  {trechosFiltrados.map((t, i) => (
+                    <Card key={i} className="hover:shadow-md transition-shadow border-l-4 border-l-blue-500">
+                      <CardContent className="p-4 space-y-2">
+                        <div className="flex flex-wrap items-center gap-2">
+                          <Badge variant="outline" className="font-bold">{t.uf}</Badge>
+                          <Badge variant="secondary" className="capitalize text-xs">{t.tipo}</Badge>
+                          <span className="text-sm font-semibold text-slate-800">{t.referencia}</span>
+                          <span className="text-xs text-slate-500">— {t.estado}</span>
+                        </div>
+                        <h4 className="font-semibold text-slate-900">{t.titulo}</h4>
+                        <p className="text-sm text-slate-600 leading-relaxed">{t.resumo}</p>
+                        <div className="flex flex-wrap gap-1 pt-1">
+                          {t.tags.map((tag, idx) => (
+                            <Badge key={idx} variant="outline" className="text-[10px] font-normal text-slate-500">
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                        <div className="pt-2">
+                          <Button asChild size="sm" variant="outline">
+                            <a href={t.linkOficial} target="_blank" rel="noopener noreferrer">
+                              <ExternalLink className="w-3 h-3 mr-1" />
+                              Texto oficial — {t.uf === "BR" ? "Norma federal" : `SEFAZ ${t.uf}`}
+                            </a>
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+
+                <Card className="bg-amber-50 border-amber-200">
+                  <CardContent className="p-3 flex gap-2 items-start text-xs text-amber-800">
+                    <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" />
+                    <p>
+                      Os resumos têm caráter <strong>orientador</strong>. Para a redação atualizada,
+                      consulte sempre o link oficial da SEFAZ — a numeração de artigos e anexos pode
+                      ser alterada por decretos posteriores.
+                    </p>
+                  </CardContent>
+                </Card>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
 
           {/* GUIA PRÁTICO */}
           <TabsContent value="guia" className="space-y-6">
