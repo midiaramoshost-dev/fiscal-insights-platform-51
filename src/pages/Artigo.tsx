@@ -12,7 +12,8 @@ import SubHeader from "@/components/SubHeader";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import AdSlot from "@/components/AdSlot";
 import BlogSidebar from "@/components/BlogSidebar";
-import { getArtigoBySlug, getArtigosRelacionados, autoLinkParagrafo, type Bloco } from "@/data/artigos";
+import { getArtigosRelacionados, autoLinkParagrafo, type Bloco } from "@/data/artigos";
+import { useArtigoBySlug } from "@/hooks/useAllArtigos";
 
 
 const BASE = "https://fiscal-insights-platform-51.lovable.app";
@@ -98,12 +99,19 @@ const RenderBloco = ({ b, excludeSlug }: { b: Bloco; excludeSlug?: string }) => 
 
 const Artigo = () => {
   const { slug = "" } = useParams();
-  const artigo = getArtigoBySlug(slug);
+  const { artigo, loading } = useArtigoBySlug(slug);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 text-slate-500 text-sm">
+        Carregando artigo…
+      </div>
+    );
+  }
   if (!artigo) return <Navigate to="/blog" replace />;
 
   const relacionados = getArtigosRelacionados(slug);
