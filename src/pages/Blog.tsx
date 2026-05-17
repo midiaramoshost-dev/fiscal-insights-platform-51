@@ -16,6 +16,7 @@ import { useAllArtigos } from "@/hooks/useAllArtigos";
 
 const Blog = () => {
   const [params, setParams] = useSearchParams();
+  const { artigos } = useAllArtigos();
   const cat = params.get("cat") || "";
   const q = params.get("q") || "";
 
@@ -30,7 +31,7 @@ const Blog = () => {
         a.tags.some((t) => t.toLowerCase().includes(termo))
       );
     });
-  }, [cat, q]);
+  }, [cat, q, artigos]);
 
   const destaque = filtrados[0];
   const resto = filtrados.slice(1);
