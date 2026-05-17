@@ -1,5 +1,5 @@
 
-import { Users, FileText, Settings, BarChart3, Calendar, Book, ShoppingCart, MessageSquare, ArrowLeft, TrendingUp, Key } from "lucide-react";
+import { Users, FileText, Settings, BarChart3, Calendar, Book, ShoppingCart, MessageSquare, ArrowLeft, TrendingUp, Key, Newspaper } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +16,7 @@ import VendasManager from "./admin/VendasManager";
 import ConfiguracoesManager from "./admin/ConfiguracoesManager";
 import ApiConfigManager from "./admin/ApiConfigManager";
 import CalendarioFiscalManager from "./admin/CalendarioFiscalManager";
+import ArtigosCMSManager from "./admin/ArtigosCMSManager";
 
 const AdminPanelContent = () => {
   const { artigos, indices, linksExternos, usuarios, cursos, vendas } = useAdmin();
@@ -85,7 +86,11 @@ const AdminPanelContent = () => {
 
         {/* Main Content */}
         <Tabs defaultValue="usuarios" className="w-full">
-          <TabsList className="grid w-full grid-cols-9 mb-6">
+          <TabsList className="grid w-full grid-cols-10 mb-6">
+            <TabsTrigger value="artigos" className="flex items-center space-x-2">
+              <Newspaper className="w-4 h-4" />
+              <span>Artigos</span>
+            </TabsTrigger>
             <TabsTrigger value="usuarios" className="flex items-center space-x-2">
               <Users className="w-4 h-4" />
               <span>Usuários</span>
@@ -123,6 +128,11 @@ const AdminPanelContent = () => {
               <span>Config</span>
             </TabsTrigger>
           </TabsList>
+
+          {/* CMS de Artigos */}
+          <TabsContent value="artigos">
+            <ArtigosCMSManager />
+          </TabsContent>
 
           {/* Gestão de Usuários */}
           <TabsContent value="usuarios">

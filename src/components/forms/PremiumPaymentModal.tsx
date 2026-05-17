@@ -22,7 +22,7 @@ const PremiumPaymentModal = ({ isOpen, onClose, userData }: PremiumPaymentModalP
   const [pixData, setPixData] = useState<PixChargeResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState<'pending' | 'paid' | 'error'>('pending');
-  const [statusCheckInterval, setStatusCheckInterval] = useState<NodeJS.Timeout | null>(null);
+  const [statusCheckInterval, setStatusCheckInterval] = useState<ReturnType<typeof setInterval> | null>(null);
 
   const planoPrecos = {
     'mensal': 97.90,
