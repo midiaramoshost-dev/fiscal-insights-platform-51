@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Clock, Calendar, RefreshCw, Share2, ChevronRight, Tag } from "lucide-react";
 import Header from "@/components/Header";
@@ -12,14 +12,34 @@ import SubHeader from "@/components/SubHeader";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import AdSlot from "@/components/AdSlot";
 import BlogSidebar from "@/components/BlogSidebar";
-import { getArtigoBySlug, getArtigosRelacionados, type Bloco } from "@/data/artigos";
+import { getArtigoBySlug, getArtigosRelacionados, autoLinkParagrafo, type Bloco } from "@/data/artigos";
+
 
 const BASE = "https://fiscal-insights-platform-51.lovable.app";
 
-const RenderBloco = ({ b }: { b: Bloco }) => {
+const RenderBloco = ({ b, excludeSlug }: { b: Bloco; excludeSlug?: string }) => {
   switch (b.tipo) {
-    case "p":
-      return <p className="text-slate-700 leading-relaxed mb-4">{b.texto}</p>;
+    case "p": {
+      const frags = autoLinkParagrafo(b.texto, excludeSlug);
+      return (
+        <p className="text-slate-700 leading-relaxed mb-4">
+          {frags.map((f, i) =>
+            f.href ? (
+              <Link
+                key={i}
+                to={f.href}
+                title={f.titulo}
+                className="text-blue-700 underline decoration-blue-300 underline-offset-2 hover:decoration-blue-700"
+              >
+                {f.texto}
+              </Link>
+            ) : (
+              <span key={i}>{f.texto}</span>
+            )
+          )}
+        </p>
+      );
+    }
     case "h2":
       return <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-3 scroll-mt-20">{b.texto}</h2>;
     case "h3":
@@ -178,7 +198,8 @@ const Artigo = () => {
             {/* Author + meta */}
             <div className="flex flex-wrap items-center gap-4 pb-4 border-b border-slate-200 mb-6">
               <div className="flex items-center gap-3">
-                <Avatar className="w-12 h-12 bg-gradient-to-br from-blue-500 to-emerald-500">
+                <Avatar className="w-12 h-12">
+                  <AvatarImage src={artigo.autor.avatar} alt={`Foto de ${artigo.autor.nome}`} />
                   <AvatarFallback className="bg-gradient-to-br from-blue-500 to-emerald-500 text-white font-semibold">
                     {artigo.autor.iniciais}
                   </AvatarFallback>
@@ -219,7 +240,7 @@ const Artigo = () => {
             {/* Body — split em duas metades para inserir ad no meio */}
             <div className="prose-content">
               {artigo.blocos.slice(0, Math.ceil(artigo.blocos.length / 2)).map((b, i) => (
-                <RenderBloco key={i} b={b} />
+                <RenderBloco key={i} b={b} excludeSlug={slug} />
               ))}
             </div>
 
@@ -227,7 +248,7 @@ const Artigo = () => {
 
             <div className="prose-content">
               {artigo.blocos.slice(Math.ceil(artigo.blocos.length / 2)).map((b, i) => (
-                <RenderBloco key={i} b={b} />
+                <RenderBloco key={i} b={b} excludeSlug={slug} />
               ))}
             </div>
 
@@ -250,7 +271,27 @@ const Artigo = () => {
               </section>
             )}
 
-            {/* Tags */}
+            {/* Sobre o autor (E-E-A-T) */}
+            <section className="mt-10 border-t pt-6">
+              <h2 className="text-base font-semibold text-slate-700 mb-3 uppercase tracking-wide">Sobre o autor</h2>
+              <div className="flex gap-4 bg-slate-50 border border-slate-200 rounded-lg p-4">
+                <Avatar className="w-16 h-16 shrink-0">
+                  <AvatarImage src={artigo.autor.avatar} alt={`Foto de ${artigo.autor.nome}`} />
+                  <AvatarFallback className="bg-gradient-to-br from-blue-500 to-emerald-500 text-white font-semibold">
+                    {artigo.autor.iniciais}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-slate-900">{artigo.autor.nome}</p>
+                  <p className="text-xs text-slate-500 mb-1">{artigo.autor.cargo}</p>
+                  <p className="text-sm text-slate-700 leading-relaxed">{artigo.autor.bio}</p>
+                  {artigo.autor.credenciais && (
+                    <p className="text-xs text-emerald-700 mt-2 font-medium">✓ {artigo.autor.credenciais}</p>
+                  )}
+                </div>
+              </div>
+            </section>
+
             <div className="mt-8 flex flex-wrap items-center gap-2">
               <Tag className="w-4 h-4 text-slate-400" />
               {artigo.tags.map((t) => (

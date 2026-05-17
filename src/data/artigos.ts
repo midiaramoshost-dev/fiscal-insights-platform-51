@@ -20,6 +20,8 @@ export interface Autor {
   cargo: string;
   bio: string;
   iniciais: string;
+  avatar: string;
+  credenciais?: string;
 }
 
 export interface Artigo {
@@ -37,11 +39,16 @@ export interface Artigo {
   faq: FAQ[];
 }
 
+const avatarUrl = (seed: string, bg: string) =>
+  `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(seed)}&backgroundColor=${bg}&textColor=ffffff&fontWeight=700`;
+
 const AUTOR_PRINCIPAL: Autor = {
   nome: "Equipe Editorial Conecta Fisco",
   cargo: "Redação Tributária",
   bio: "Time de contadores, advogados tributaristas e jornalistas especializados em legislação fiscal brasileira, com mais de 12 anos de experiência em Receita Federal, ICMS, Simples Nacional e direito do trabalho.",
   iniciais: "CF",
+  avatar: avatarUrl("Conecta Fisco", "1d4ed8"),
+  credenciais: "Redação verificada · Revisão técnica por contadores (CRC) e advogados (OAB)",
 };
 
 const AUTOR_MEI: Autor = {
@@ -49,6 +56,8 @@ const AUTOR_MEI: Autor = {
   cargo: "Especialista em MEI e Simples Nacional",
   bio: "Contadora (CRC-SP), pós-graduada em Direito Tributário, atua há 10 anos com regularização de microempreendedores e parcelamentos junto à Receita Federal.",
   iniciais: "RR",
+  avatar: avatarUrl("Renata Ribeiro", "059669"),
+  credenciais: "CRC-SP · Pós em Direito Tributário (FGV)",
 };
 
 const AUTOR_IR: Autor = {
@@ -56,6 +65,8 @@ const AUTOR_IR: Autor = {
   cargo: "Especialista em IRPF e e-CAC",
   bio: "Auditor fiscal aposentado, consultor em Imposto de Renda Pessoa Física há 15 anos, autor de materiais didáticos sobre malha fina e restituição.",
   iniciais: "CM",
+  avatar: avatarUrl("Carlos Menezes", "0f172a"),
+  credenciais: "Ex-auditor fiscal · 15 anos de consultoria em IRPF",
 };
 
 export const artigos: Artigo[] = [
@@ -670,4 +681,69 @@ export const getArtigosRelacionados = (slug: string, limit = 3) => {
       return sameCatB + tagsB - (sameCatA + tagsA);
     })
     .slice(0, limit);
+};
+
+// Lista artigos ordenados pela data de ATUALIZAÇÃO mais recente
+export const getArtigosAtualizadosRecentemente = (limit = 6) =>
+  [...artigos]
+    .sort((a, b) => +new Date(b.dataAtualizacao) - +new Date(a.dataAtualizacao))
+    .slice(0, limit);
+
+// Linking interno automático: dada uma string de parágrafo, retorna fragments
+// alternando texto puro e links para outros artigos quando encontra um título/tag
+// reconhecível. Usa apenas UMA ocorrência por slug por parágrafo, e evita o slug atual.
+export interface AutoLinkFragment {
+  texto: string;
+  href?: string;
+  titulo?: string;
+}
+
+// Mapa de termos → slug (palavras-chave editoriais curadas)
+const TERMOS_INTERNOS: { termo: RegExp; slug: string }[] = [
+  { termo: /\bDAS\s+MEI\b/i, slug: "como-emitir-das-mei" },
+  { termo: /\babrir\s+MEI\b/i, slug: "como-abrir-mei" },
+  { termo: /\bImposto de Renda\b/i, slug: "como-declarar-imposto-de-renda" },
+  { termo: /\brestitui[çc][ãa]o\b/i, slug: "como-consultar-restituicao-ir" },
+  { termo: /\bDARF\b/i, slug: "como-emitir-darf" },
+  { termo: /\be-?CAC\b/i, slug: "como-acessar-e-cac" },
+  { termo: /\bCPF\s+irregular\b/i, slug: "como-regularizar-cpf" },
+  { termo: /\bregulariza(r|ção)\s+(do\s+)?CPF\b/i, slug: "como-regularizar-cpf" },
+  { termo: /\bpend[êe]ncias?\s+(no\s+)?CPF\b/i, slug: "como-consultar-pendencias-cpf" },
+  { termo: /\bparcelar\b/i, slug: "como-parcelar-divida-receita-federal" },
+  { termo: /\bparcelamento\b/i, slug: "como-parcelar-divida-receita-federal" },
+];
+
+export const autoLinkParagrafo = (
+  texto: string,
+  excludeSlug?: string
+): AutoLinkFragment[] => {
+  const candidatos = TERMOS_INTERNOS.filter(
+    (t) => t.slug !== excludeSlug && getArtigoBySlug(t.slug)
+  );
+  const usados = new Set<string>();
+  const fragments: AutoLinkFragment[] = [{ texto }];
+
+  for (const { termo, slug } of candidatos) {
+    if (usados.has(slug)) continue;
+    for (let i = 0; i < fragments.length; i++) {
+      const f = fragments[i];
+      if (f.href) continue;
+      const m = f.texto.match(termo);
+      if (!m) continue;
+      const idx = m.index ?? -1;
+      if (idx < 0) continue;
+      const antes = f.texto.slice(0, idx);
+      const match = f.texto.slice(idx, idx + m[0].length);
+      const depois = f.texto.slice(idx + m[0].length);
+      const artigo = getArtigoBySlug(slug)!;
+      const novos: AutoLinkFragment[] = [];
+      if (antes) novos.push({ texto: antes });
+      novos.push({ texto: match, href: `/artigo/${slug}`, titulo: artigo.titulo });
+      if (depois) novos.push({ texto: depois });
+      fragments.splice(i, 1, ...novos);
+      usados.add(slug);
+      break;
+    }
+  }
+  return fragments;
 };
