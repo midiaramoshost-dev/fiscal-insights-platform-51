@@ -221,6 +221,96 @@ const Index = () => {
               </div>
             </section>
 
+            {/* Notícias Tributárias */}
+            <section>
+              <header className="flex items-center justify-between border-b-2 border-rose-600 pb-2 mb-5">
+                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                  <Radio className="w-5 h-5 text-rose-600" /> Notícias Tributárias
+                </h2>
+                <Link to="/blog" className="text-xs font-semibold text-blue-600 hover:underline">
+                  Ver todas →
+                </Link>
+              </header>
+              <div className="grid md:grid-cols-3 gap-4">
+                {noticias.map((a) => (
+                  <Link key={a.slug} to={`/artigo/${a.slug}`} className="group block">
+                    <article className="bg-white border-l-4 border-rose-500 border-y border-r border-slate-200 rounded-r-lg p-4 hover:shadow-md transition-shadow h-full">
+                      <Badge className="bg-rose-100 hover:bg-rose-100 text-rose-700 text-[10px] mb-2">
+                        {a.categoria}
+                      </Badge>
+                      <h3 className="text-base font-semibold text-slate-900 group-hover:text-rose-700 line-clamp-3 leading-snug mb-2">
+                        {a.titulo}
+                      </h3>
+                      <p className="text-xs text-slate-600 line-clamp-2 mb-2">{a.resumo}</p>
+                      <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                        <Calendar className="w-3 h-3" /> {formatDate(a.dataPublicacao)}
+                      </div>
+                    </article>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            {/* Guias Tributários */}
+            <section>
+              <header className="flex items-center justify-between border-b-2 border-emerald-700 pb-2 mb-5">
+                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                  <GraduationCap className="w-5 h-5 text-emerald-700" /> Guias Tributários
+                </h2>
+                <Link to="/blog" className="text-xs font-semibold text-blue-600 hover:underline">
+                  Todos os guias →
+                </Link>
+              </header>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {guias.map((a) => (
+                  <Link key={a.slug} to={`/artigo/${a.slug}`} className="group block">
+                    <Card className="h-full hover:shadow-md transition-shadow border-emerald-100">
+                      <CardContent className="p-4">
+                        <div className="flex items-center gap-2 text-emerald-700 text-[10px] font-bold uppercase tracking-wide mb-2">
+                          <BookOpen className="w-3 h-3" /> Guia · {a.categoria}
+                        </div>
+                        <h3 className="text-base font-semibold text-slate-900 group-hover:text-emerald-700 line-clamp-3 leading-snug mb-2">
+                          {a.titulo}
+                        </h3>
+                        <div className="flex items-center gap-2 text-[11px] text-slate-500">
+                          <Clock className="w-3 h-3" /> {a.tempoLeituraMin} min de leitura
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
+            {/* Conteúdos em Destaque */}
+            <section>
+              <header className="flex items-center justify-between border-b-2 border-amber-500 pb-2 mb-5">
+                <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                  <Star className="w-5 h-5 text-amber-500" /> Conteúdos em Destaque
+                </h2>
+                <span className="text-xs text-slate-500">Análises aprofundadas da redação</span>
+              </header>
+              <div className="grid md:grid-cols-3 gap-4">
+                {destaques.map((a) => (
+                  <Link key={a.slug} to={`/artigo/${a.slug}`} className="group block">
+                    <article className="relative bg-gradient-to-br from-slate-900 to-slate-700 text-white rounded-lg p-5 h-full hover:shadow-xl transition-shadow overflow-hidden">
+                      <Star className="absolute top-3 right-3 w-4 h-4 text-amber-400 fill-amber-400" />
+                      <Badge className="bg-amber-500 hover:bg-amber-500 text-slate-900 text-[10px] mb-3">
+                        DESTAQUE · {a.categoria}
+                      </Badge>
+                      <h3 className="text-lg font-bold leading-snug mb-2 group-hover:text-amber-300 transition-colors line-clamp-3">
+                        {a.titulo}
+                      </h3>
+                      <p className="text-xs text-slate-300 line-clamp-3 mb-3">{a.resumo}</p>
+                      <div className="flex items-center gap-2 text-[11px] text-slate-400">
+                        <Clock className="w-3 h-3" /> {a.tempoLeituraMin} min · por {a.autor.nome}
+                      </div>
+                    </article>
+                  </Link>
+                ))}
+              </div>
+            </section>
+
             {/* Faixas por categoria */}
             {porCategoria.map((grupo, idx) => (
               <section key={grupo.cat}>
