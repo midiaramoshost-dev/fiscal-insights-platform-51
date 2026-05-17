@@ -28,10 +28,24 @@ const Index = () => {
     .sort((a, b) => +new Date(b.dataAtualizacao) - +new Date(a.dataAtualizacao))
     .slice(0, 4);
 
+  // Notícias tributárias: categorias mais "factuais"
+  const catsNoticias = ["Receita Federal", "Parcelamentos", "Simples Nacional", "Imposto de Renda"];
+  const noticias = ordenados.filter((a) => catsNoticias.includes(a.categoria)).slice(0, 6);
+
+  // Guias tributários: categoria dedicada + MEI/CPF (guia-orientado)
+  const catsGuias = ["Guias Tributários", "MEI", "CPF"];
+  const guias = ordenados.filter((a) => catsGuias.includes(a.categoria)).slice(0, 6);
+
+  // Conteúdos em destaque: artigos mais longos (proxy para profundidade)
+  const destaques = [...artigos]
+    .sort((a, b) => b.tempoLeituraMin - a.tempoLeituraMin)
+    .slice(0, 3);
+
   // Agrupa por categoria para faixas editoriais
   const porCategoria = categorias
     .map((c) => ({ cat: c, lista: ordenados.filter((a) => a.categoria === c).slice(0, 3) }))
     .filter((g) => g.lista.length > 0);
+
 
   return (
     <div className="min-h-screen bg-slate-50">
