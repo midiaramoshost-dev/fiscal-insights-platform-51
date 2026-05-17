@@ -20,6 +20,8 @@ export interface Autor {
   cargo: string;
   bio: string;
   iniciais: string;
+  avatar: string;
+  credenciais?: string;
 }
 
 export interface Artigo {
