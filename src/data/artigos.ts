@@ -701,15 +701,16 @@ export interface AutoLinkFragment {
 // Mapa de termos → slug (palavras-chave editoriais curadas)
 const TERMOS_INTERNOS: { termo: RegExp; slug: string }[] = [
   { termo: /\bDAS\s+MEI\b/i, slug: "como-emitir-das-mei" },
-  { termo: /\bMEI inadimplente\b/i, slug: "como-emitir-das-mei" },
   { termo: /\babrir\s+MEI\b/i, slug: "como-abrir-mei" },
   { termo: /\bImposto de Renda\b/i, slug: "como-declarar-imposto-de-renda" },
-  { termo: /\brestitui[çc][ãa]o\b/i, slug: "consultar-restituicao-ir" },
-  { termo: /\bDARF\b/i, slug: "como-emitir-pagar-darf" },
-  { termo: /\be-?CAC\b/i, slug: "como-acessar-ecac" },
-  { termo: /\bCPF\s+irregular\b/i, slug: "regularizar-cpf-irregular" },
-  { termo: /\bpend[êe]ncias?\s+(no\s+)?CPF\b/i, slug: "consultar-pendencias-cpf" },
-  { termo: /\bparcelar\b/i, slug: "como-parcelar-divida-receita" },
+  { termo: /\brestitui[çc][ãa]o\b/i, slug: "como-consultar-restituicao-ir" },
+  { termo: /\bDARF\b/i, slug: "como-emitir-darf" },
+  { termo: /\be-?CAC\b/i, slug: "como-acessar-e-cac" },
+  { termo: /\bCPF\s+irregular\b/i, slug: "como-regularizar-cpf" },
+  { termo: /\bregulariza(r|ção)\s+(do\s+)?CPF\b/i, slug: "como-regularizar-cpf" },
+  { termo: /\bpend[êe]ncias?\s+(no\s+)?CPF\b/i, slug: "como-consultar-pendencias-cpf" },
+  { termo: /\bparcelar\b/i, slug: "como-parcelar-divida-receita-federal" },
+  { termo: /\bparcelamento\b/i, slug: "como-parcelar-divida-receita-federal" },
 ];
 
 export const autoLinkParagrafo = (
