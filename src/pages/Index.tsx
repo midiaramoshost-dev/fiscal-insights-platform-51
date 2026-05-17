@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { Calendar, Clock, TrendingUp, ChevronRight, Newspaper, Flame, BookOpen } from "lucide-react";
+import { Calendar, Clock, TrendingUp, ChevronRight, Newspaper, Flame, BookOpen, RefreshCw } from "lucide-react";
 import Header from "@/components/Header";
 import SubHeader from "@/components/SubHeader";
 import BlogSidebar from "@/components/BlogSidebar";
 import AdSlot from "@/components/AdSlot";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { artigos, categorias } from "@/data/artigos";
+import { artigos, categorias, getArtigosAtualizadosRecentemente } from "@/data/artigos";
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
@@ -22,6 +22,7 @@ const Index = () => {
   const secundarios = ordenados.slice(1, 3);
   const maisLidos = ordenados.slice(0, 5);
   const recentes = ordenados.slice(3, 9);
+  const atualizados = getArtigosAtualizadosRecentemente(4);
 
   // Agrupa por categoria para faixas editoriais
   const porCategoria = categorias
