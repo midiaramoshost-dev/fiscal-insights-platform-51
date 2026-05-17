@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Clock, Calendar, RefreshCw, Share2, ChevronRight, Tag } from "lucide-react";
 import Header from "@/components/Header";
@@ -12,7 +12,8 @@ import SubHeader from "@/components/SubHeader";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import AdSlot from "@/components/AdSlot";
 import BlogSidebar from "@/components/BlogSidebar";
-import { getArtigoBySlug, getArtigosRelacionados, type Bloco } from "@/data/artigos";
+import { getArtigoBySlug, getArtigosRelacionados, autoLinkParagrafo, type Bloco } from "@/data/artigos";
+import { Link as RLink } from "react-router-dom";
 
 const BASE = "https://fiscal-insights-platform-51.lovable.app";
 
