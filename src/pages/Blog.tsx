@@ -176,6 +176,39 @@ const Blog = () => {
                 </Link>
               ))}
             </div>
+
+            {/* Paginação */}
+            {totalPages > 1 && (
+              <nav aria-label="Paginação" className="flex items-center justify-center gap-2 pt-4">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={pageSafe === 1}
+                  onClick={() => goToPage(pageSafe - 1)}
+                >
+                  ← Anterior
+                </Button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <Button
+                    key={p}
+                    size="sm"
+                    variant={p === pageSafe ? "default" : "outline"}
+                    onClick={() => goToPage(p)}
+                    aria-current={p === pageSafe ? "page" : undefined}
+                  >
+                    {p}
+                  </Button>
+                ))}
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={pageSafe === totalPages}
+                  onClick={() => goToPage(pageSafe + 1)}
+                >
+                  Próxima →
+                </Button>
+              </nav>
+            )}
           </div>
 
           <div className="hidden lg:block">
