@@ -13,7 +13,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import AdSlot from "@/components/AdSlot";
 import BlogSidebar from "@/components/BlogSidebar";
 import { getArtigoBySlug, getArtigosRelacionados, autoLinkParagrafo, type Bloco } from "@/data/artigos";
-import { Link as RLink } from "react-router-dom";
+
 
 const BASE = "https://fiscal-insights-platform-51.lovable.app";
 
