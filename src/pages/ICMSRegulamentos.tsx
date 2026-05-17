@@ -57,6 +57,15 @@ const ICMSRegulamentos = () => {
   const [busca, setBusca] = useState("");
   const [buscaTrecho, setBuscaTrecho] = useState("");
   const [filtroTipo, setFiltroTipo] = useState<"todos" | "artigo" | "inciso" | "anexo">("todos");
+  const [filtroUF, setFiltroUF] = useState<string>("todos");
+
+  const ufsDisponiveis = useMemo(() => {
+    const map = new Map<string, string>();
+    trechosRICMS.forEach((t) => map.set(t.uf, t.estado));
+    return Array.from(map.entries())
+      .sort(([a], [b]) => (a === "BR" ? -1 : b === "BR" ? 1 : a.localeCompare(b)))
+      .map(([uf, estado]) => ({ uf, estado }));
+  }, []);
 
   const filtrados = useMemo(
     () =>
@@ -73,6 +82,7 @@ const ICMSRegulamentos = () => {
   const trechosFiltrados = useMemo(() => {
     const termo = buscaTrecho.trim().toLowerCase();
     return trechosRICMS.filter((t) => {
+      if (filtroUF !== "todos" && t.uf !== filtroUF) return false;
       if (filtroTipo !== "todos" && t.tipo !== filtroTipo) return false;
       if (!termo) return true;
       return (
@@ -84,7 +94,7 @@ const ICMSRegulamentos = () => {
         t.tags.some((tag) => tag.toLowerCase().includes(termo))
       );
     });
-  }, [buscaTrecho, filtroTipo]);
+  }, [buscaTrecho, filtroTipo, filtroUF]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
