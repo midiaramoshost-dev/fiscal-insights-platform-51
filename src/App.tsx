@@ -66,6 +66,10 @@ const AppRoutes = () => {
         <Route path="/politica-cookies" element={<PoliticaCookies />} />
         <Route path="/sobre-anuncios" element={<SobreAnuncios />} />
         <Route path="/topico/:slug" element={<Topico />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/artigo/:slug" element={<Artigo />} />
+        <Route path="/politica-editorial" element={<PoliticaEditorial />} />
+        <Route path="/transparencia" element={<Transparencia />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!hideFooter && <Footer />}
