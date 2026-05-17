@@ -240,7 +240,7 @@ const Artigo = () => {
             {/* Body — split em duas metades para inserir ad no meio */}
             <div className="prose-content">
               {artigo.blocos.slice(0, Math.ceil(artigo.blocos.length / 2)).map((b, i) => (
-                <RenderBloco key={i} b={b} />
+                <RenderBloco key={i} b={b} excludeSlug={slug} />
               ))}
             </div>
 
@@ -248,7 +248,7 @@ const Artigo = () => {
 
             <div className="prose-content">
               {artigo.blocos.slice(Math.ceil(artigo.blocos.length / 2)).map((b, i) => (
-                <RenderBloco key={i} b={b} />
+                <RenderBloco key={i} b={b} excludeSlug={slug} />
               ))}
             </div>
 
