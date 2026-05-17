@@ -152,12 +152,26 @@ const ICMSRegulamentos = () => {
                   <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <Input
-                      placeholder="Buscar artigo, inciso, anexo, UF ou tema..."
+                      placeholder="Buscar artigo, inciso, anexo ou tema..."
                       value={buscaTrecho}
                       onChange={(e) => setBuscaTrecho(e.target.value)}
                       className="pl-10"
                     />
                   </div>
+                  <Select value={filtroUF} onValueChange={setFiltroUF}>
+                    <SelectTrigger className="w-full md:w-56">
+                      <MapPin className="w-4 h-4 mr-2 text-slate-500" />
+                      <SelectValue placeholder="Estado (UF)" />
+                    </SelectTrigger>
+                    <SelectContent className="max-h-72">
+                      <SelectItem value="todos">Todos os estados</SelectItem>
+                      {ufsDisponiveis.map(({ uf, estado }) => (
+                        <SelectItem key={uf} value={uf}>
+                          {uf === "BR" ? "BR — Norma federal" : `${uf} — ${estado}`}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <div className="flex gap-2 flex-wrap">
                     {(["todos", "artigo", "inciso", "anexo"] as const).map((t) => (
                       <Button
@@ -173,15 +187,27 @@ const ICMSRegulamentos = () => {
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-500">
-                  {trechosFiltrados.length} resultado(s) encontrado(s)
-                </p>
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <p className="text-xs text-slate-500">
+                    {trechosFiltrados.length} resultado(s){filtroUF !== "todos" && ` em ${filtroUF}`}
+                  </p>
+                  {(filtroUF !== "todos" || filtroTipo !== "todos" || buscaTrecho) && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => { setFiltroUF("todos"); setFiltroTipo("todos"); setBuscaTrecho(""); }}
+                      className="text-xs h-7"
+                    >
+                      Limpar filtros
+                    </Button>
+                  )}
+                </div>
 
                 <div className="space-y-3">
                   {trechosFiltrados.length === 0 && (
                     <Card className="bg-slate-50">
                       <CardContent className="p-6 text-center text-slate-500 text-sm">
-                        Nenhum trecho encontrado. Tente termos como "art. 52", "anexo IV", "DIFAL" ou a UF do estado.
+                        Nenhum trecho encontrado{filtroUF !== "todos" ? ` para ${filtroUF}` : ""}. Tente outra UF, termo ou limpe os filtros.
                       </CardContent>
                     </Card>
                   )}
