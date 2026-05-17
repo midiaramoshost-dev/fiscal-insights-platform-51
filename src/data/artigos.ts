@@ -39,11 +39,16 @@ export interface Artigo {
   faq: FAQ[];
 }
 
+const avatarUrl = (seed: string, bg: string) =>
+  `https://api.dicebear.com/9.x/initials/svg?seed=${encodeURIComponent(seed)}&backgroundColor=${bg}&textColor=ffffff&fontWeight=700`;
+
 const AUTOR_PRINCIPAL: Autor = {
   nome: "Equipe Editorial Conecta Fisco",
   cargo: "Redação Tributária",
   bio: "Time de contadores, advogados tributaristas e jornalistas especializados em legislação fiscal brasileira, com mais de 12 anos de experiência em Receita Federal, ICMS, Simples Nacional e direito do trabalho.",
   iniciais: "CF",
+  avatar: avatarUrl("Conecta Fisco", "1d4ed8"),
+  credenciais: "Redação verificada · Revisão técnica por contadores (CRC) e advogados (OAB)",
 };
 
 const AUTOR_MEI: Autor = {
@@ -51,6 +56,8 @@ const AUTOR_MEI: Autor = {
   cargo: "Especialista em MEI e Simples Nacional",
   bio: "Contadora (CRC-SP), pós-graduada em Direito Tributário, atua há 10 anos com regularização de microempreendedores e parcelamentos junto à Receita Federal.",
   iniciais: "RR",
+  avatar: avatarUrl("Renata Ribeiro", "059669"),
+  credenciais: "CRC-SP · Pós em Direito Tributário (FGV)",
 };
 
 const AUTOR_IR: Autor = {
@@ -58,6 +65,8 @@ const AUTOR_IR: Autor = {
   cargo: "Especialista em IRPF e e-CAC",
   bio: "Auditor fiscal aposentado, consultor em Imposto de Renda Pessoa Física há 15 anos, autor de materiais didáticos sobre malha fina e restituição.",
   iniciais: "CM",
+  avatar: avatarUrl("Carlos Menezes", "0f172a"),
+  credenciais: "Ex-auditor fiscal · 15 anos de consultoria em IRPF",
 };
 
 export const artigos: Artigo[] = [
