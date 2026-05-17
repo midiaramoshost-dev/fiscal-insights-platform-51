@@ -17,10 +17,29 @@ import { getArtigoBySlug, getArtigosRelacionados, autoLinkParagrafo, type Bloco 
 
 const BASE = "https://fiscal-insights-platform-51.lovable.app";
 
-const RenderBloco = ({ b }: { b: Bloco }) => {
+const RenderBloco = ({ b, excludeSlug }: { b: Bloco; excludeSlug?: string }) => {
   switch (b.tipo) {
-    case "p":
-      return <p className="text-slate-700 leading-relaxed mb-4">{b.texto}</p>;
+    case "p": {
+      const frags = autoLinkParagrafo(b.texto, excludeSlug);
+      return (
+        <p className="text-slate-700 leading-relaxed mb-4">
+          {frags.map((f, i) =>
+            f.href ? (
+              <Link
+                key={i}
+                to={f.href}
+                title={f.titulo}
+                className="text-blue-700 underline decoration-blue-300 underline-offset-2 hover:decoration-blue-700"
+              >
+                {f.texto}
+              </Link>
+            ) : (
+              <span key={i}>{f.texto}</span>
+            )
+          )}
+        </p>
+      );
+    }
     case "h2":
       return <h2 className="text-2xl font-bold text-slate-900 mt-8 mb-3 scroll-mt-20">{b.texto}</h2>;
     case "h3":
