@@ -33,8 +33,22 @@ const Blog = () => {
     });
   }, [cat, q, artigos]);
 
-  const destaque = filtrados[0];
-  const resto = filtrados.slice(1);
+  const PAGE_SIZE = 9;
+  const page = Math.max(1, parseInt(params.get("page") || "1", 10));
+  const totalPages = Math.max(1, Math.ceil(filtrados.length / PAGE_SIZE));
+  const pageSafe = Math.min(page, totalPages);
+  const startIdx = (pageSafe - 1) * PAGE_SIZE;
+  const pageItems = filtrados.slice(startIdx, startIdx + PAGE_SIZE);
+  const destaque = pageSafe === 1 ? pageItems[0] : undefined;
+  const resto = pageSafe === 1 ? pageItems.slice(1) : pageItems;
+
+  const goToPage = (p: number) => {
+    const np = new URLSearchParams(params);
+    if (p <= 1) np.delete("page");
+    else np.set("page", String(p));
+    setParams(np);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -162,6 +176,39 @@ const Blog = () => {
                 </Link>
               ))}
             </div>
+
+            {/* Paginação */}
+            {totalPages > 1 && (
+              <nav aria-label="Paginação" className="flex items-center justify-center gap-2 pt-4">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={pageSafe === 1}
+                  onClick={() => goToPage(pageSafe - 1)}
+                >
+                  ← Anterior
+                </Button>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <Button
+                    key={p}
+                    size="sm"
+                    variant={p === pageSafe ? "default" : "outline"}
+                    onClick={() => goToPage(p)}
+                    aria-current={p === pageSafe ? "page" : undefined}
+                  >
+                    {p}
+                  </Button>
+                ))}
+                <Button
+                  size="sm"
+                  variant="outline"
+                  disabled={pageSafe === totalPages}
+                  onClick={() => goToPage(pageSafe + 1)}
+                >
+                  Próxima →
+                </Button>
+              </nav>
+            )}
           </div>
 
           <div className="hidden lg:block">
