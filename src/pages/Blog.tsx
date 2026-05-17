@@ -11,7 +11,8 @@ import SubHeader from "@/components/SubHeader";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import BlogSidebar from "@/components/BlogSidebar";
 import AdSlot from "@/components/AdSlot";
-import { artigos, categorias } from "@/data/artigos";
+import { categorias } from "@/data/artigos";
+import { useAllArtigos } from "@/hooks/useAllArtigos";
 
 const Blog = () => {
   const [params, setParams] = useSearchParams();

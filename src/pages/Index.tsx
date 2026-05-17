@@ -7,12 +7,14 @@ import BlogSidebar from "@/components/BlogSidebar";
 import AdSlot from "@/components/AdSlot";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { artigos, categorias, getArtigosAtualizadosRecentemente } from "@/data/artigos";
+import { categorias } from "@/data/artigos";
+import { useAllArtigos } from "@/hooks/useAllArtigos";
 
 const formatDate = (iso: string) =>
   new Date(iso).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
 
 const Index = () => {
+  const { artigos } = useAllArtigos();
   // Ordena por data desc
   const ordenados = [...artigos].sort(
     (a, b) => new Date(b.dataPublicacao).getTime() - new Date(a.dataPublicacao).getTime()
@@ -22,7 +24,9 @@ const Index = () => {
   const secundarios = ordenados.slice(1, 3);
   const maisLidos = ordenados.slice(0, 5);
   const recentes = ordenados.slice(3, 9);
-  const atualizados = getArtigosAtualizadosRecentemente(4);
+  const atualizados = [...artigos]
+    .sort((a, b) => +new Date(b.dataAtualizacao) - +new Date(a.dataAtualizacao))
+    .slice(0, 4);
 
   // Agrupa por categoria para faixas editoriais
   const porCategoria = categorias
