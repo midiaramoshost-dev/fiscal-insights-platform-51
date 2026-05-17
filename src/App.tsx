@@ -53,34 +53,36 @@ const AppRoutes = () => {
 
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/admin" element={<AdminPanel />} />
-        <Route path="/quem-somos" element={<QuemSomos />} />
-        <Route path="/softwares" element={<Softwares />} />
-        <Route path="/consultoria" element={<Consultoria />} />
-        <Route path="/ferramentas" element={<Ferramentas />} />
-        <Route path="/cursos" element={<Cursos />} />
-        <Route path="/cursos/ead" element={<EAD />} />
-        <Route path="/cursos/presencial" element={<Presencial />} />
-        <Route path="/cursos/incompany" element={<InCompany />} />
-        <Route path="/contato" element={<Contato />} />
-        <Route path="/newsletter" element={<Newsletter />} />
-        <Route path="/suporte" element={<Suporte />} />
-        <Route path="/icms" element={<ICMSEstados />} />
-        <Route path="/icms-regulamentos" element={<ICMSRegulamentos />} />
-        <Route path="/clt-comentada" element={<CLTComentada />} />
-        <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
-        <Route path="/termos-uso" element={<TermosUso />} />
-        <Route path="/politica-cookies" element={<PoliticaCookies />} />
-        <Route path="/sobre-anuncios" element={<SobreAnuncios />} />
-        <Route path="/topico/:slug" element={<Topico />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/artigo/:slug" element={<Artigo />} />
-        <Route path="/politica-editorial" element={<PoliticaEditorial />} />
-        <Route path="/transparencia" element={<Transparencia />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Suspense fallback={<RouteFallback />}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/artigo/:slug" element={<Artigo />} />
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/quem-somos" element={<QuemSomos />} />
+          <Route path="/softwares" element={<Softwares />} />
+          <Route path="/consultoria" element={<Consultoria />} />
+          <Route path="/ferramentas" element={<Ferramentas />} />
+          <Route path="/cursos" element={<Cursos />} />
+          <Route path="/cursos/ead" element={<EAD />} />
+          <Route path="/cursos/presencial" element={<Presencial />} />
+          <Route path="/cursos/incompany" element={<InCompany />} />
+          <Route path="/contato" element={<Contato />} />
+          <Route path="/newsletter" element={<Newsletter />} />
+          <Route path="/suporte" element={<Suporte />} />
+          <Route path="/icms" element={<ICMSEstados />} />
+          <Route path="/icms-regulamentos" element={<ICMSRegulamentos />} />
+          <Route path="/clt-comentada" element={<CLTComentada />} />
+          <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
+          <Route path="/termos-uso" element={<TermosUso />} />
+          <Route path="/politica-cookies" element={<PoliticaCookies />} />
+          <Route path="/sobre-anuncios" element={<SobreAnuncios />} />
+          <Route path="/topico/:slug" element={<Topico />} />
+          <Route path="/politica-editorial" element={<PoliticaEditorial />} />
+          <Route path="/transparencia" element={<Transparencia />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
       {!hideFooter && <Footer />}
       <CookieConsent />
     </>
