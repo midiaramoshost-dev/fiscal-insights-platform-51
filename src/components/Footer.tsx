@@ -21,10 +21,12 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-3">Conteúdo</h4>
             <ul className="space-y-2 text-sm text-slate-300">
+              <li><Link to="/blog" className="hover:text-white">Blog Fiscal</Link></li>
+              <li><Link to="/blog?cat=MEI" className="hover:text-white">MEI</Link></li>
+              <li><Link to="/blog?cat=Imposto%20de%20Renda" className="hover:text-white">Imposto de Renda</Link></li>
               <li><Link to="/clt-comentada" className="hover:text-white">CLT Comentada</Link></li>
               <li><Link to="/icms" className="hover:text-white">ICMS por Estado</Link></li>
               <li><Link to="/ferramentas" className="hover:text-white">Ferramentas</Link></li>
-              <li><Link to="/newsletter" className="hover:text-white">Newsletter</Link></li>
             </ul>
           </div>
 
@@ -32,9 +34,10 @@ const Footer = () => {
             <h4 className="font-semibold mb-3">Institucional</h4>
             <ul className="space-y-2 text-sm text-slate-300">
               <li><Link to="/quem-somos" className="hover:text-white">Quem Somos</Link></li>
+              <li><Link to="/politica-editorial" className="hover:text-white">Política Editorial</Link></li>
+              <li><Link to="/transparencia" className="hover:text-white">Transparência</Link></li>
               <li><Link to="/contato" className="hover:text-white">Contato</Link></li>
               <li><Link to="/suporte" className="hover:text-white">Suporte</Link></li>
-              <li><Link to="/cursos" className="hover:text-white">Cursos</Link></li>
             </ul>
           </div>
 
