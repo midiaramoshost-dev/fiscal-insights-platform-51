@@ -10,5 +10,14 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
 User-agent: *
 Allow: /
+Disallow: /admin
+
+Sitemap: https://fiscal-insights-platform-51.lovable.app/sitemap.xml

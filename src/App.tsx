@@ -31,6 +31,10 @@ import TermosUso from "./pages/TermosUso";
 import PoliticaCookies from "./pages/PoliticaCookies";
 import SobreAnuncios from "./pages/SobreAnuncios";
 import Topico from "./pages/Topico";
+import Blog from "./pages/Blog";
+import Artigo from "./pages/Artigo";
+import PoliticaEditorial from "./pages/PoliticaEditorial";
+import Transparencia from "./pages/Transparencia";
 
 const queryClient = new QueryClient();
 
@@ -62,6 +66,10 @@ const AppRoutes = () => {
         <Route path="/politica-cookies" element={<PoliticaCookies />} />
         <Route path="/sobre-anuncios" element={<SobreAnuncios />} />
         <Route path="/topico/:slug" element={<Topico />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/artigo/:slug" element={<Artigo />} />
+        <Route path="/politica-editorial" element={<PoliticaEditorial />} />
+        <Route path="/transparencia" element={<Transparencia />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!hideFooter && <Footer />}
