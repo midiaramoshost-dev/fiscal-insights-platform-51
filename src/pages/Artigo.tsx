@@ -198,7 +198,8 @@ const Artigo = () => {
             {/* Author + meta */}
             <div className="flex flex-wrap items-center gap-4 pb-4 border-b border-slate-200 mb-6">
               <div className="flex items-center gap-3">
-                <Avatar className="w-12 h-12 bg-gradient-to-br from-blue-500 to-emerald-500">
+                <Avatar className="w-12 h-12">
+                  <AvatarImage src={artigo.autor.avatar} alt={`Foto de ${artigo.autor.nome}`} />
                   <AvatarFallback className="bg-gradient-to-br from-blue-500 to-emerald-500 text-white font-semibold">
                     {artigo.autor.iniciais}
                   </AvatarFallback>
