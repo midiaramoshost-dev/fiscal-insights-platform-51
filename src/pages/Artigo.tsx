@@ -271,7 +271,27 @@ const Artigo = () => {
               </section>
             )}
 
-            {/* Tags */}
+            {/* Sobre o autor (E-E-A-T) */}
+            <section className="mt-10 border-t pt-6">
+              <h2 className="text-base font-semibold text-slate-700 mb-3 uppercase tracking-wide">Sobre o autor</h2>
+              <div className="flex gap-4 bg-slate-50 border border-slate-200 rounded-lg p-4">
+                <Avatar className="w-16 h-16 shrink-0">
+                  <AvatarImage src={artigo.autor.avatar} alt={`Foto de ${artigo.autor.nome}`} />
+                  <AvatarFallback className="bg-gradient-to-br from-blue-500 to-emerald-500 text-white font-semibold">
+                    {artigo.autor.iniciais}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="min-w-0">
+                  <p className="text-sm font-semibold text-slate-900">{artigo.autor.nome}</p>
+                  <p className="text-xs text-slate-500 mb-1">{artigo.autor.cargo}</p>
+                  <p className="text-sm text-slate-700 leading-relaxed">{artigo.autor.bio}</p>
+                  {artigo.autor.credenciais && (
+                    <p className="text-xs text-emerald-700 mt-2 font-medium">✓ {artigo.autor.credenciais}</p>
+                  )}
+                </div>
+              </div>
+            </section>
+
             <div className="mt-8 flex flex-wrap items-center gap-2">
               <Tag className="w-4 h-4 text-slate-400" />
               {artigo.tags.map((t) => (
